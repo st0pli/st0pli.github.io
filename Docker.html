@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Archives - St0p's Blog
+  Docker - St0p's Blog
   
   </title>
   
@@ -94,70 +94,146 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_archives').addClass('is_active');
-  });
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-    <div id="archives-page-wrap">
-        <h1>Archives</h1>
-        <div class="markdown-body archives-wrap">
-          
-             
-                <h1>2018</h1>
-            
-            <div class="article">
-              <a class="clearlink" href="15264761866295.html">
-                <h1>Centos 7 安装Docker</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2018/5/16 21:9 下午</span>
-                <span>posted in&nbsp;</span> 
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="15264761866295.html">
                 
-                    <span class="posted-in"><a href='Docker.html'>Docker</a></span>
-                
-                    <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
-                 
-              </div>
-            </div><!-- article -->
+                  <h1>Centos 7 安装Docker</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<pre><code class="language-shell"># 初使化安装环境
+yum -y install yum-utils gcc g++ kernel-devel
 
-          
-            
-            <div class="article">
-              <a class="clearlink" href="15264756876811.html">
-                <h1>Docker Swarm常用命令集合</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2018/5/16 21:1 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='Docker.html'>Docker</a></span>
-                
-                    <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
-                 
-              </div>
-            </div><!-- article -->
+# 添加yum 仓库并更新
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum makecache fast
 
-          
-            
-            <div class="article">
-              <a class="clearlink" href="15258762622328.html">
-                <h1>MAC 软件提示已损坏，需要移到废纸篓的解决方法</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2018/5/9 22:31 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='Mac.html'>Mac</a></span>
-                 
-              </div>
-            </div><!-- article -->
 
-           
-        </div>
-      </div>
-  </div>
+# 安装并以服务方式启动docker
+sudo yum -y install docker-ce
+sudo systemctl enable docker
+sudo systemctl start docker
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2018/5/16 21:9 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Docker.html'>Docker</a></span>
+          				  
+          					    <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="15264756876811.html">
+                
+                  <h1>Docker Swarm常用命令集合</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<pre><code class="language-shell"># 初使化Swarm 192.168.1.1为对外IP
+docker swarm init --listen-addr 192.168.1.1:2377 --advertise-addr 192.168.1.1
+
+# 查看Worker Token
+docker swarm join-token worker
+
+# Worker加入集群 替换对应token值
+docker swarm join --token \
+SWMTKN-1-5eukghd8e9wby5aw8t8y4rdz425euoo8m9qgmgitpxg63ax2ol-94dvz9vrx5oai22jc3vl2eh56 \
+192.168.1.1:2377
+
+# 查看Manager Token
+docker swarm join-token manager
+
+# Manager加入集群 替换对应token值
+docker swarm join --token \
+SWMTKN-1-5eukghd8e9wby5aw8t8y4rdz425euoo8m9qgmgitpxg63ax2ol-94dvz9vrx5oai22jc3vl2ehed2 \
+192.168.1.1:2377
+
+# 查看集群中的节点 在Manager机器人执行
+docker node ls
+
+# 创建虚拟网络
+docker network create --driver overlay --subnet 10.0.10.0/24 \
+  --opt encrypted test_network
+  
+# Centos 7 防火墙开放端口
+firewall-cmd --add-port=2376/tcp --permanent
+firewall-cmd --add-port=2377/tcp --permanent
+firewall-cmd --add-port=7946/tcp --permanent
+firewall-cmd --add-port=7946/udp --permanent
+firewall-cmd --add-port=4789/udp --permanent
+sudo firewall-cmd --reload
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2018/5/16 21:1 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Docker.html'>Docker</a></span>
+          				  
+          					    <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
+
+
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

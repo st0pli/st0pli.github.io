@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Archives - St0p's Blog
+  Centos 7 安装Docker - St0p's Blog
   
   </title>
   
@@ -95,69 +95,84 @@
 
  <script type="text/javascript">
   $(function(){
-    $('#menu_item_archives').addClass('is_active');
+    $('#menu_item_index').addClass('is_active');
   });
 </script>
 <div class="row">
   <div class="large-8 medium-8 columns">
-    <div id="archives-page-wrap">
-        <h1>Archives</h1>
-        <div class="markdown-body archives-wrap">
+      <div class="markdown-body article-wrap">
+       <div class="article">
           
-             
-                <h1>2018</h1>
-            
-            <div class="article">
-              <a class="clearlink" href="15264761866295.html">
-                <h1>Centos 7 安装Docker</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2018/5/16 21:9 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='Docker.html'>Docker</a></span>
-                
-                    <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
-                 
-              </div>
-            </div><!-- article -->
+          <h1>Centos 7 安装Docker</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/5/16 21:9 下午</span>
 
+          <span>posted in&nbsp;</span> 
           
-            
-            <div class="article">
-              <a class="clearlink" href="15264756876811.html">
-                <h1>Docker Swarm常用命令集合</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2018/5/16 21:1 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='Docker.html'>Docker</a></span>
-                
-                    <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
+              <span class="posted-in"><a href='Docker.html'>Docker</a></span>
           
-            
-            <div class="article">
-              <a class="clearlink" href="15258762622328.html">
-                <h1>MAC 软件提示已损坏，需要移到废纸篓的解决方法</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2018/5/9 22:31 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='Mac.html'>Mac</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
+              <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
            
+         
+          <span class="comments">
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <pre><code class="language-shell"># 初使化安装环境
+yum -y install yum-utils gcc g++ kernel-devel
+
+# 添加yum 仓库并更新
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum makecache fast
+
+
+# 安装并以服务方式启动docker
+sudo yum -y install docker-ce
+sudo systemctl enable docker
+sudo systemctl start docker
+</code></pre>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="15264756876811.html" 
+          title="Next Post: Docker Swarm常用命令集合">Docker Swarm常用命令集合 &raquo;</a>
+      
+      </p>
         </div>
       </div>
-  </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">
