@@ -4,13 +4,39 @@
   <title><![CDATA[St0p's Blog]]></title>
   <link href="http://www.st0p.org/atom.xml" rel="self"/>
   <link href="http://www.st0p.org/"/>
-  <updated>2018-05-16T21:16:20+08:00</updated>
+  <updated>2018-05-16T21:16:23+08:00</updated>
   <id>http://www.st0p.org/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.st0p.org">St0p</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[VsCode 环境配置]]></title>
+    <link href="http://www.st0p.org/15301684740354.html"/>
+    <updated>2018-06-28T14:47:54+08:00</updated>
+    <id>http://www.st0p.org/15301684740354.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">GO</h2>
+
+<p>先安装GO插件 Ctrl+P输入ext install Go 然后安装所需插件</p>
+
+<pre><code>go get -u -v github.com/nsf/gocode
+go get -u -v github.com/rogpeppe/godef
+go get -u -v github.com/golang/lint/golint
+go get -u -v github.com/lukehoban/go-outline
+go get -u -v sourcegraph.com/sqs/goreturns
+go get -u -v golang.org/x/tools/cmd/gorename
+go get -u -v github.com/tpng/gopkgs
+go get -u -v github.com/newhook/go-symbols
+go get -u -v golang.org/x/tools/cmd/guru
+go get -v -u github.com/peterh/liner
+go get -v -u github.com/derekparker/delve/cmd/dlv
+</code></pre>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Centos 7 安装Docker]]></title>
