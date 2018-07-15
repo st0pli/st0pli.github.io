@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[St0p's Blog]]></title>
+  <link href="http://www.st0p.org/atom.xml" rel="self"/>
+  <link href="http://www.st0p.org/"/>
+  <updated>2018-07-15T14:15:07+08:00</updated>
+  <id>http://www.st0p.org/</id>
+  <author>
+    <name><![CDATA[]]></name>
+    
+  </author>
+  <generator uri="http://www.st0p.org">St0p</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[安装oh-my-zsh]]></title>
+    <link href="http://www.st0p.org/15316333350253.html"/>
+    <updated>2018-07-15T13:42:15+08:00</updated>
+    <id>http://www.st0p.org/15316333350253.html</id>
+    <content type="html"><![CDATA[
+<pre><code>sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;
+</code></pre>
+
+<h2 id="toc_0">自动提示命令</h2>
+
+<pre><code>git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+
+# 开启插件
+nano ~/.zshrc
+# 修改添加zsh-autosuggestions
+plugins=(
+  zsh-autosuggestions
+  git
+)
+</code></pre>
+
+<h2 id="toc_1">语法高亮</h2>
+
+<pre><code>brew install zsh-syntax-highlighting
+
+echo &quot;source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh&quot; &gt;&gt; ~/.zshrc
+
+source ~/.zshrc
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MAC下BREW安装NGINX+PHP+MYSQL环境]]></title>
+    <link href="http://www.st0p.org/15316208486803.html"/>
+    <updated>2018-07-15T10:14:08+08:00</updated>
+    <id>http://www.st0p.org/15316208486803.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">安装BREW 先安装XCODE</h2>
+
+<pre><code>/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+xcode-select --install
+</code></pre>
+
+<h2 id="toc_1">安装NGINX (因官方库更新不支持插件 使用<a href="https://github.com/denji/homebrew-nginx">https://github.com/denji/homebrew-nginx</a>)</h2>
+
+<pre><code>brew tap denji/nginx
+brew install nginx-full --with-geoip2-module --with-headers-more-module --with-lua-module --with-redis2-module --with-subs-filter-module
+</code></pre>
+
+<h3 id="toc_2">NGINX 移动配置信息保存到目录（~/Documents/nginx） 更改80端口及运行权限</h3>
+
+<pre><code># 转移配置文件
+mv /usr/local/etc/nginx/ ~/Documents/WebSite/nginx/
+ln -s ~/Documents/WebSite/nginx /usr/local/etc/nginx
+
+# 创建目录
+mkdir -p ~/Documents/WebSite/nginx/vhosts/
+mkdir -p ~/Documents/WebSite/default/wwwroot/
+mkdir -p ~/Documents/WebSite/default/logs/
+mkdir -p ~/Documents/WebSite/logs/
+
+# 创建配置文件
+tee ~/Documents/WebSite/nginx/nginx.conf  &lt;&lt;-&#39;EOF&#39;
+user  nobody;
+worker_processes  1;
+
+pid        /Users/用户名/Documents/WebSite/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;
+                      &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;
+                      &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        access_log  /Users/用户名/Documents/WebSite/default/logs/access.log  main;
+        error_log  /Users/用户名/Documents/WebSite/default/logs/error.log;
+
+        location / {
+            root   /Users/用户名/Documents/WebSite/default/wwwroot/;
+            index  index.html index.htm;
+        }
+    }
+
+    include vhosts/*;
+}
+EOF
+
+# 更改80端口权限
+sudo chown root:wheel /usr/local/opt/nginx-full/bin/nginx
+sudo chmod u+s /usr/local/opt/nginx-full/bin/nginx
+
+</code></pre>
+
+<h3 id="toc_3">NGINX开机启动</h3>
+
+<pre><code>ln -sfv /usr/local/opt/nginx-full/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx-full.plist
+</code></pre>
+
+<h2 id="toc_4">安装MYSQL</h2>
+
+<pre><code>brew install mysql@5.7
+
+# 添加环境到/etc/profile
+export PATH=&quot;$(brew --prefix mysql@5.7)/bin:$PATH&quot;
+srouce /etc/profile
+</code></pre>
+
+<h3 id="toc_5">修改配置</h3>
+
+<pre><code># 创建目录
+mkdir -p ~/Documents/MySql/
+mkdir -p ~/Documents/MySql/data/
+
+# 创建配置文件
+tee ~/Documents/MySql/my.cnf  &lt;&lt;-&#39;EOF&#39;
+[client]
+socket = /Users/用户名/Documents/MySql/mysqld.sock
+port = 3306
+[mysqld]
+socket = /Users/用户名/Documents/MySql/mysqld.sock
+port = 3306
+datadir = /Users/用户名/Documents/MySql/data
+skip-external-locking
+bind-address = 0.0.0.0
+log_error = /Users/用户名/Documents/MySql/mysql-error.log
+slow_query_log = on
+slow-query-log-file = /Users/用户名/Documents/MySql/mysql-slow.log
+EOF
+
+ln -s ~/Documents/MySql/my.cnf /usr/local/etc/my.cnf
+</code></pre>
+
+<h3 id="toc_6">初使化MYSQL</h3>
+
+<pre><code>mysqld --initialize
+</code></pre>
+
+<h3 id="toc_7">MySQL开机启动</h3>
+
+<pre><code>ln -sfv /usr/local/opt/mysql@5.7/*.plist ~/Library/LaunchAgents
+
+# 更改数据目录为/Users/用户名/Documents/MySql/data
+nano ~/Library/LaunchAgents/homebrew.mxcl.mysql@5.7.plist
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql@5.7.plist
+</code></pre>
+
+<h3 id="toc_8">安装完成之后更改密码</h3>
+
+<pre><code># 查看密码
+grep &quot;generated for root@localhost&quot; ~/Documents/MySql/mysql-error.log
+# 用密码登陆
+mysql -u root -p
+</code></pre>
+
+<pre><code># 修改密码
+SET PASSWORD = PASSWORD(&#39;密码&#39;);
+ALTER USER &#39;root&#39;@&#39;localhost&#39; PASSWORD EXPIRE NEVER;
+flush privileges;
+quit
+</code></pre>
+
+<h2 id="toc_9">更新CURL</h2>
+
+<pre><code>brew install curl
+brew link curl --force
+</code></pre>
+
+<h2 id="toc_10">安装PHP</h2>
+
+<pre><code>brew update
+brew install php@5.6
+</code></pre>
+
+<pre><code># 添加PHP到环境(/etc/profile)
+export PATH=&quot;$(brew --prefix php56)/bin:$PATH&quot;
+export PATH=&quot;$(brew --prefix php56)/sbin:$PATH&quot;
+source /etc/profile
+</code></pre>
+
+<pre><code>mv /usr/local/etc/php/ ~/Documents/WebSite/php/
+ln -s ~/Documents/WebSite/php /usr/local/etc/php
+
+nano ~/Documents/WebSite/php/5.6/php-fpm.conf
+
+#修改内容去掉注释
+pid = /Users/用户名/Documents/WebSite/php/php-fpm.pid
+</code></pre>
+
+<h3 id="toc_11">PHP-FPM开机启动</h3>
+
+<pre><code>ln -sfv /usr/local/opt/php@5.6/*.plist ~/Library/LaunchAgents
+# 更改数据目录为/Users/用户名/Documents/WebSite/php/5.6/
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php@5.6.plist
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MAC下GO 安装环境配置]]></title>
+    <link href="http://www.st0p.org/15316173580282.html"/>
+    <updated>2018-07-15T09:15:58+08:00</updated>
+    <id>http://www.st0p.org/15316173580282.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">下载并安装GO安装包</h2>
+
+<p>打开<a href="http://golang.org">http://golang.org</a> 下载对应的二进制安装包</p>
+
+<h2 id="toc_1">配置工作环境</h2>
+
+<pre><code>mkdir -p ~/Documents/go
+
+#把以下内容加入/etc/profile 中
+
+export GOROOT=/usr/local/go
+export GOPATH=/Users/用户名/Documents/go
+export GOBIN=$GOPATH/bin
+export PATH=&quot;$PATH:$GOROOT/bin:$GOPATH/bin&quot;
+
+#保存内容并执行以下更新环境信息
+
+srouce /etc/profile
+</code></pre>
+
+<h2 id="toc_2">安装常用工具</h2>
+
+<h3 id="toc_3">官方</h3>
+
+<pre><code>go get -u golang.org/x/tools/cmd/...
+go get -u golang.org/x/tools/cmd/godoc
+go get -u github.com/golang/dep/cmd/dep
+
+mkdir -p $GOPATH/src/golang.org/x
+cd $GOPATH/src/golang.org/x
+git clone https://github.com/golang/tools.git
+git clone https://github.com/golang/sys.git
+git clone https://github.com/golang/crypto.git
+git clone https://github.com/golang/net.git
+git clone https://github.com/golang/text.git
+
+</code></pre>
+
+<h3 id="toc_4">第三方</h3>
+
+<pre><code>go get -u github.com/Masterminds/glide
+go install github.com/Masterminds/glide
+go get -u github.com/BurntSushi/toml
+go get -u gopkg.in/yaml.v2
+go get -u github.com/valyala/fasthttp
+go get -u github.com/valyala/tcplisten
+go get -u github.com/buaazp/fasthttprouter
+go get -u github.com/ccpaging/nxlog4go
+go get -u github.com/go-xorm/xorm
+go get -u github.com/go-sql-driver/mysql
+go get -u github.com/golang-plus/uuid
+go get -u github.com/json-iterator/go
+go get -u github.com/olivere/elastic
+go get -u github.com/oschwald/geoip2-golang
+go get -u github.com/pkg/errors
+go get -u github.com/robfig/cron
+go get -u github.com/seefan/gossdb
+go get -u github.com/go-redis/redis
+go get -u github.com/tinylib/msgp
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[VsCode 环境配置]]></title>
+    <link href="http://www.st0p.org/15301684740354.html"/>
+    <updated>2018-06-28T14:47:54+08:00</updated>
+    <id>http://www.st0p.org/15301684740354.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">GO</h2>
+
+<p>先安装GO插件 Ctrl+P输入ext install Go 然后安装所需插件</p>
+
+<pre><code>go get -u -v github.com/nsf/gocode
+go get -u -v github.com/rogpeppe/godef
+go get -u -v github.com/golang/lint/golint
+go get -u -v github.com/lukehoban/go-outline
+go get -u -v sourcegraph.com/sqs/goreturns
+go get -u -v golang.org/x/tools/cmd/gorename
+go get -u -v github.com/tpng/gopkgs
+go get -u -v github.com/newhook/go-symbols
+go get -u -v golang.org/x/tools/cmd/guru
+go get -v -u github.com/peterh/liner
+go get -v -u github.com/derekparker/delve/cmd/dlv
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Centos 7 安装Docker]]></title>
+    <link href="http://www.st0p.org/15264761866295.html"/>
+    <updated>2018-05-16T21:09:46+08:00</updated>
+    <id>http://www.st0p.org/15264761866295.html</id>
+    <content type="html"><![CDATA[
+<pre><code class="language-shell"># 初使化安装环境
+yum -y install yum-utils gcc g++ kernel-devel
+
+# 添加yum 仓库并更新
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum makecache fast
+
+
+# 安装并以服务方式启动docker
+sudo yum -y install docker-ce
+sudo systemctl enable docker
+sudo systemctl start docker
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Docker Swarm常用命令集合]]></title>
+    <link href="http://www.st0p.org/15264756876811.html"/>
+    <updated>2018-05-16T21:01:27+08:00</updated>
+    <id>http://www.st0p.org/15264756876811.html</id>
+    <content type="html"><![CDATA[
+<pre><code class="language-shell"># 初使化Swarm 192.168.1.1为对外IP
+docker swarm init --listen-addr 192.168.1.1:2377 --advertise-addr 192.168.1.1
+
+# 查看Worker Token
+docker swarm join-token worker
+
+# Worker加入集群 替换对应token值
+docker swarm join --token \
+SWMTKN-1-5eukghd8e9wby5aw8t8y4rdz425euoo8m9qgmgitpxg63ax2ol-94dvz9vrx5oai22jc3vl2eh56 \
+192.168.1.1:2377
+
+# 查看Manager Token
+docker swarm join-token manager
+
+# Manager加入集群 替换对应token值
+docker swarm join --token \
+SWMTKN-1-5eukghd8e9wby5aw8t8y4rdz425euoo8m9qgmgitpxg63ax2ol-94dvz9vrx5oai22jc3vl2ehed2 \
+192.168.1.1:2377
+
+# 查看集群中的节点 在Manager机器人执行
+docker node ls
+
+# 创建虚拟网络
+docker network create --driver overlay --subnet 10.0.10.0/24 \
+  --opt encrypted test_network
+  
+# Centos 7 防火墙开放端口
+firewall-cmd --add-port=2376/tcp --permanent
+firewall-cmd --add-port=2377/tcp --permanent
+firewall-cmd --add-port=7946/tcp --permanent
+firewall-cmd --add-port=7946/udp --permanent
+firewall-cmd --add-port=4789/udp --permanent
+sudo firewall-cmd --reload
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MAC 软件提示已损坏，需要移到废纸篓的解决方法]]></title>
+    <link href="http://www.st0p.org/15258762622328.html"/>
+    <updated>2018-05-09T22:31:02+08:00</updated>
+    <id>http://www.st0p.org/15258762622328.html</id>
+    <content type="html"><![CDATA[
+<p>移除这个应用的安全隔离属性，操作如下：<br/>
+打开终端<code>Terminal</code>，输入以下命令后回车，如需要，请输入密码</p>
+
+<pre><code class="language-shell">xattr -r -d com.apple.quarantine &lt;path&gt;
+</code></pre>
+
+<p><code>&lt;path&gt;</code>是你下载的应用程序的路径，一般在<code>/Applications/应用程序名字</code><br/>
+新运行下载的应用程序。</p>
+
+]]></content>
+  </entry>
+  
+</feed>

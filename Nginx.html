@@ -1,1 +1,478 @@
-   
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  Nginx - St0p's Blog
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="St0p's Blog" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site:www.st0p.org ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; St0p's Blog</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+       
+       <li><a href="index.html">HOME</a></li>
+    <li><a href="archives.html">Archives</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="Mac.html">Mac</a></li>
+        
+            <li><a href="Go.html">Go</a></li>
+        
+            <li><a href="Php.html">Php</a></li>
+        
+            <li><a href="Docker.html">Docker</a></li>
+        
+            <li><a href="Nginx.html">Nginx</a></li>
+        
+            <li><a href="CentOs.html">CentOs</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
+</script>
+<div class="row">
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="15316208486803.html">
+                
+                  <h1>MAC下BREW安装NGINX+PHP+MYSQL环境</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">安装BREW 先安装XCODE</h2>
+
+<pre><code>/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+xcode-select --install
+</code></pre>
+
+<h2 id="toc_1">安装NGINX (因官方库更新不支持插件 使用<a href="https://github.com/denji/homebrew-nginx">https://github.com/denji/homebrew-nginx</a>)</h2>
+
+<pre><code>brew tap denji/nginx
+brew install nginx-full --with-geoip2-module --with-headers-more-module --with-lua-module --with-redis2-module --with-subs-filter-module
+</code></pre>
+
+<h3 id="toc_2">NGINX 移动配置信息保存到目录（~/Documents/nginx） 更改80端口及运行权限</h3>
+
+<pre><code># 转移配置文件
+mv /usr/local/etc/nginx/ ~/Documents/WebSite/nginx/
+ln -s ~/Documents/WebSite/nginx /usr/local/etc/nginx
+
+# 创建目录
+mkdir -p ~/Documents/WebSite/nginx/vhosts/
+mkdir -p ~/Documents/WebSite/default/wwwroot/
+mkdir -p ~/Documents/WebSite/default/logs/
+mkdir -p ~/Documents/WebSite/logs/
+
+# 创建配置文件
+tee ~/Documents/WebSite/nginx/nginx.conf  &lt;&lt;-&#39;EOF&#39;
+user  nobody;
+worker_processes  1;
+
+pid        /Users/用户名/Documents/WebSite/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;
+                      &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;
+                      &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        access_log  /Users/用户名/Documents/WebSite/default/logs/access.log  main;
+        error_log  /Users/用户名/Documents/WebSite/default/logs/error.log;
+
+        location / {
+            root   /Users/用户名/Documents/WebSite/default/wwwroot/;
+            index  index.html index.htm;
+        }
+    }
+
+    include vhosts/*;
+}
+EOF
+
+# 更改80端口权限
+sudo chown root:wheel /usr/local/opt/nginx-full/bin/nginx
+sudo chmod u+s /usr/local/opt/nginx-full/bin/nginx
+
+</code></pre>
+
+<h3 id="toc_3">NGINX开机启动</h3>
+
+<pre><code>ln -sfv /usr/local/opt/nginx-full/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx-full.plist
+</code></pre>
+
+<h2 id="toc_4">安装MYSQL</h2>
+
+<pre><code>brew install mysql@5.7
+
+# 添加环境到/etc/profile
+export PATH=&quot;$(brew --prefix mysql@5.7)/bin:$PATH&quot;
+srouce /etc/profile
+</code></pre>
+
+<h3 id="toc_5">修改配置</h3>
+
+<pre><code># 创建目录
+mkdir -p ~/Documents/MySql/
+mkdir -p ~/Documents/MySql/data/
+
+# 创建配置文件
+tee ~/Documents/MySql/my.cnf  &lt;&lt;-&#39;EOF&#39;
+[client]
+socket = /Users/用户名/Documents/MySql/mysqld.sock
+port = 3306
+[mysqld]
+socket = /Users/用户名/Documents/MySql/mysqld.sock
+port = 3306
+datadir = /Users/用户名/Documents/MySql/data
+skip-external-locking
+bind-address = 0.0.0.0
+log_error = /Users/用户名/Documents/MySql/mysql-error.log
+slow_query_log = on
+slow-query-log-file = /Users/用户名/Documents/MySql/mysql-slow.log
+EOF
+
+ln -s ~/Documents/MySql/my.cnf /usr/local/etc/my.cnf
+</code></pre>
+
+<h3 id="toc_6">初使化MYSQL</h3>
+
+<pre><code>mysqld --initialize
+</code></pre>
+
+<h3 id="toc_7">MySQL开机启动</h3>
+
+<pre><code>ln -sfv /usr/local/opt/mysql@5.7/*.plist ~/Library/LaunchAgents
+
+# 更改数据目录为/Users/用户名/Documents/MySql/data
+nano ~/Library/LaunchAgents/homebrew.mxcl.mysql@5.7.plist
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql@5.7.plist
+</code></pre>
+
+<h3 id="toc_8">安装完成之后更改密码</h3>
+
+<pre><code># 查看密码
+grep &quot;generated for root@localhost&quot; ~/Documents/MySql/mysql-error.log
+# 用密码登陆
+mysql -u root -p
+</code></pre>
+
+<pre><code># 修改密码
+SET PASSWORD = PASSWORD(&#39;密码&#39;);
+ALTER USER &#39;root&#39;@&#39;localhost&#39; PASSWORD EXPIRE NEVER;
+flush privileges;
+quit
+</code></pre>
+
+<h2 id="toc_9">更新CURL</h2>
+
+<pre><code>brew install curl
+brew link curl --force
+</code></pre>
+
+<h2 id="toc_10">安装PHP</h2>
+
+<pre><code>brew update
+brew install php@5.6
+</code></pre>
+
+<pre><code># 添加PHP到环境(/etc/profile)
+export PATH=&quot;$(brew --prefix php56)/bin:$PATH&quot;
+export PATH=&quot;$(brew --prefix php56)/sbin:$PATH&quot;
+source /etc/profile
+</code></pre>
+
+<pre><code>mv /usr/local/etc/php/ ~/Documents/WebSite/php/
+ln -s ~/Documents/WebSite/php /usr/local/etc/php
+
+nano ~/Documents/WebSite/php/5.6/php-fpm.conf
+
+#修改内容去掉注释
+pid = /Users/用户名/Documents/WebSite/php/php-fpm.pid
+</code></pre>
+
+<h3 id="toc_11">PHP-FPM开机启动</h3>
+
+<pre><code>ln -sfv /usr/local/opt/php@5.6/*.plist ~/Library/LaunchAgents
+# 更改数据目录为/Users/用户名/Documents/WebSite/php/5.6/
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php@5.6.plist
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2018/7/15 10:14 上午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Mac.html'>Mac</a></span>
+          				  
+          					    <span class="posted-in"><a href='Php.html'>Php</a></span>
+          				  
+          					    <span class="posted-in"><a href='Nginx.html'>Nginx</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
+
+
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <h1>St0p's Blog</h1>
+                <div class="site-des">接触越多发现自己不懂的越多,只能慢慢前行,努力超越现在的自己!</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+
+
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="Mac.html"><strong>Mac</strong></a>
+        
+            <a href="Go.html"><strong>Go</strong></a>
+        
+            <a href="Php.html"><strong>Php</strong></a>
+        
+            <a href="Docker.html"><strong>Docker</strong></a>
+        
+            <a href="Nginx.html"><strong>Nginx</strong></a>
+        
+            <a href="CentOs.html"><strong>CentOs</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="15316333350253.html">安装oh-my-zsh</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15316208486803.html">MAC下BREW安装NGINX+PHP+MYSQL环境</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15316173580282.html">MAC下GO 安装环境配置</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15301684740354.html">VsCode 环境配置</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15264761866295.html">Centos 7 安装Docker</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; <a target="_blank" href="//www.st0p.org">St0p's Blog</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    <script src="asset/chart/all-min.js"></script><script type="text/javascript">$(function(){    var mwebii=0;    var mwebChartEleId = 'mweb-chart-ele-';    $('pre>code').each(function(){        mwebii++;        var eleiid = mwebChartEleId+mwebii;        if($(this).hasClass('language-sequence')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = Diagram.parse($(this).text());            diagram.drawSVG(eleiid,{theme: 'simple'});        }else if($(this).hasClass('language-flow')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = flowchart.parse($(this).text());            diagram.drawSVG(eleiid);        }    });});</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
+
+  </body>
+</html>
