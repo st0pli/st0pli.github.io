@@ -4,13 +4,25 @@
   <title><![CDATA[St0p's Blog]]></title>
   <link href="http://www.st0p.org/atom.xml" rel="self"/>
   <link href="http://www.st0p.org/"/>
-  <updated>2018-07-15T14:15:07+08:00</updated>
+  <updated>2018-07-15T14:15:18+08:00</updated>
   <id>http://www.st0p.org/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.st0p.org">St0p</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[OSX 10.11重置Launchpad icon]]></title>
+    <link href="http://www.st0p.org/15317090928564.html"/>
+    <updated>2018-07-16T10:44:52+08:00</updated>
+    <id>http://www.st0p.org/15317090928564.html</id>
+    <content type="html"><![CDATA[
+<pre><code>defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
+</code></pre>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[安装oh-my-zsh]]></title>

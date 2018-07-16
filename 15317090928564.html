@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Docker Swarm常用命令集合 - St0p's Blog
+  OSX 10.11重置Launchpad icon - St0p's Blog
   
   </title>
   
@@ -109,16 +109,14 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>Docker Swarm常用命令集合</h1>
+          <h1>OSX 10.11重置Launchpad icon</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/5/16 21:1 下午</span>
+          <span class="date">2018/7/16 10:44 上午</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='Docker.html'>Docker</a></span>
-          
-              <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
+              <span class="posted-in"><a href='Mac.html'>Mac</a></span>
            
          
           <span class="comments">
@@ -131,39 +129,7 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <pre><code class="language-shell"># 初使化Swarm 192.168.1.1为对外IP
-docker swarm init --listen-addr 192.168.1.1:2377 --advertise-addr 192.168.1.1
-
-# 查看Worker Token
-docker swarm join-token worker
-
-# Worker加入集群 替换对应token值
-docker swarm join --token \
-SWMTKN-1-5eukghd8e9wby5aw8t8y4rdz425euoo8m9qgmgitpxg63ax2ol-94dvz9vrx5oai22jc3vl2eh56 \
-192.168.1.1:2377
-
-# 查看Manager Token
-docker swarm join-token manager
-
-# Manager加入集群 替换对应token值
-docker swarm join --token \
-SWMTKN-1-5eukghd8e9wby5aw8t8y4rdz425euoo8m9qgmgitpxg63ax2ol-94dvz9vrx5oai22jc3vl2ehed2 \
-192.168.1.1:2377
-
-# 查看集群中的节点 在Manager机器人执行
-docker node ls
-
-# 创建虚拟网络
-docker network create --driver overlay --subnet 10.0.10.0/24 \
-  --opt encrypted test_network
-  
-# Centos 7 防火墙开放端口
-firewall-cmd --add-port=2376/tcp --permanent
-firewall-cmd --add-port=2377/tcp --permanent
-firewall-cmd --add-port=7946/tcp --permanent
-firewall-cmd --add-port=7946/udp --permanent
-firewall-cmd --add-port=4789/udp --permanent
-sudo firewall-cmd --reload
+      <pre><code>defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
 </code></pre>
 
 
@@ -175,16 +141,13 @@ sudo firewall-cmd --reload
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="15264761866295.html" 
-          title="Previous Post: Centos 7 安装Docker">&laquo; Centos 7 安装Docker</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="15258762622328.html" 
-          title="Next Post: MAC 软件提示已损坏，需要移到废纸篓的解决方法">MAC 软件提示已损坏，需要移到废纸篓的解决方法 &raquo;</a>
+          <a  href="15316333350253.html" 
+          title="Next Post: 安装oh-my-zsh">安装oh-my-zsh &raquo;</a>
       
       </p>
         </div>
