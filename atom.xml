@@ -4,13 +4,64 @@
   <title><![CDATA[St0p's Blog]]></title>
   <link href="http://www.st0p.org/atom.xml" rel="self"/>
   <link href="http://www.st0p.org/"/>
-  <updated>2018-07-26T23:23:57+08:00</updated>
+  <updated>2018-07-26T23:24:00+08:00</updated>
   <id>http://www.st0p.org/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.st0p.org">St0p</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[批量提取不规则文件中帐号密码不在同一行的数据进行合并]]></title>
+    <link href="http://www.st0p.org/15350324030193.html"/>
+    <updated>2018-08-23T21:53:23+08:00</updated>
+    <id>http://www.st0p.org/15350324030193.html</id>
+    <content type="html"><![CDATA[
+<pre><code>#!/bin/bash
+filename=&quot;./input.txt&quot;
+num=0
+cat $filename | while read line
+do
+    if [[ `echo $line | grep &#39;帐号&#39;` != &quot;&quot; ]]; then
+        user=`echo $line | awk &#39;{print $2}&#39;`
+        num=$(expr $num + 1)
+    elif [[ `echo $line | grep &#39;密码&#39;` != &quot;&quot; ]]; then
+        pass=`echo $line | awk &#39;{print $2}&#39;`
+        num=$(expr $num + 1)
+    fi
+
+    if [[  $num == 2 ]]; then
+        echo &quot;匹配到: $user, $pass&quot;
+        echo &quot;$user,$pass&quot; &gt;&gt; ./output.txt
+        num=0
+    fi
+done
+</code></pre>
+
+<h2 id="toc_0">例</h2>
+
+<pre><code>----------------------------
+afdkjakdsjfkja
+adsfkdasjfk
+网址  http://www.a.com
+帐号  userA
+密码  passA
+afdkjakdsjfkja
+adsfkdasjfk
+网址  http://www.b.com
+帐号  userB
+密码  passB
+----------------------------
+http://www.test.com
+网址  http://www.c.com
+帐号  userC
+密码  passC
+http://www.test.com
+</code></pre>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[OSX 10.11重置Launchpad icon]]></title>
