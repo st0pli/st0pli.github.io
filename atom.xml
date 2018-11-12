@@ -4,13 +4,112 @@
   <title><![CDATA[St0p's Blog]]></title>
   <link href="http://www.st0p.org/atom.xml" rel="self"/>
   <link href="http://www.st0p.org/"/>
-  <updated>2018-07-26T23:24:00+08:00</updated>
+  <updated>2018-08-23T22:05:46+08:00</updated>
   <id>http://www.st0p.org/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.st0p.org">St0p</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[CentOs7 安装KDE桌面 VNC CHROME]]></title>
+    <link href="http://www.st0p.org/15420161055935.html"/>
+    <updated>2018-11-12T17:48:25+08:00</updated>
+    <id>http://www.st0p.org/15420161055935.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">安装KDE桌面</h2>
+
+<pre><code>yum groupinstall &quot;KDE Plasma Workspaces&quot;
+yum install ibus-table-chinese.noarch kde-l10n-Chinese.noarch
+yum install ibus-libpinyin
+</code></pre>
+
+<h2 id="toc_1">安装VNC</h2>
+
+<pre><code>yum install tigervnc
+yum install tigervnc-server
+</code></pre>
+
+<h3 id="toc_2">配置VNC SERVER</h3>
+
+<pre><code># 配置窗口一
+tee /usr/lib/systemd/system/vncserver@:1.service &lt;&lt;-&#39;EOF&#39;
+[Unit]
+Description=Remote desktop service (VNC)
+After=syslog.target network.target
+[Service]
+Type=forking
+# Clean any existing files in /tmp/.X11-unix environment
+ExecStartPre=/bin/sh -c &#39;/usr/bin/vncserver -kill %i &gt; /dev/null 2&gt;&amp;1 || :&#39;
+ExecStart=/sbin/runuser -l root -c &quot;/usr/bin/vncserver %i&quot;
+PIDFile=/root/.vnc/%H%i.pid
+ExecStop=/bin/sh -c &#39;/usr/bin/vncserver -kill %i &gt; /dev/null 2&gt;&amp;1 || :&#39;
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# 加载配置
+systemctl daemon-reload
+</code></pre>
+
+<h3 id="toc_3">启用配置文件</h3>
+
+<pre><code># 设置密码
+vncpasswd
+
+# 启动服务
+systemctl start vncserver@:1.service
+
+# 查看服务状态
+systemctl status vncserver@:1.service
+
+# 开机自启动
+systemctl enable vncserver@:1.service
+</code></pre>
+
+<h4 id="toc_4">如Type=forking报错 上面配置文件改为Type=simple</h4>
+
+<pre><code>[Service]
+Type=simple
+</code></pre>
+
+<h4 id="toc_5">vnc viewer客户端连接黑屏</h4>
+
+<pre><code>chmod 777 /root/.vnc/xstartup
+</code></pre>
+
+<h2 id="toc_6">安装CHROME</h2>
+
+<p>CentOS/RedHat 7以上安装google-chrome可以完全参考<a href="https://intoli.com/blog/installing-google-chrome-on-centos/">https://intoli.com/blog/installing-google-chrome-on-centos/</a></p>
+
+<pre><code># This installs Chrome on any RHEL/CentOS/Amazon Linux variant.
+curl https://intoli.com/install-google-chrome.sh | bash
+</code></pre>
+
+<p>安装完成会显示 Successfully installed Google Chrome!</p>
+
+<h3 id="toc_7">检查是否还缺乏依赖</h3>
+
+<pre><code>ldd /opt/google/chrome/chrome | grep &quot;not found&quot;
+</code></pre>
+
+<p>返回为空，说明CentOS下chrome依赖问题基本解决。</p>
+
+<h3 id="toc_8">不允许ROOT权限启动</h3>
+
+<p>修改/usr/bin/google-chrome文件 最下面</p>
+
+<pre><code># Note: exec -a below is a bashism.
+exec -a &quot;$0&quot; &quot;$HERE/chrome&quot;  &quot;$@&quot; 
+</code></pre>
+
+<pre><code># Note: exec -a below is a bashism.
+exec -a &quot;$0&quot; &quot;$HERE/chrome&quot; &quot;$@&quot; --no-sandbox --user-data-dir
+</code></pre>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[批量提取不规则文件中帐号密码不在同一行的数据进行合并]]></title>
