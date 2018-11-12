@@ -4,7 +4,7 @@
   <title><![CDATA[St0p's Blog]]></title>
   <link href="http://www.st0p.org/atom.xml" rel="self"/>
   <link href="http://www.st0p.org/"/>
-  <updated>2018-11-12T19:08:26+08:00</updated>
+  <updated>2018-11-12T20:16:43+08:00</updated>
   <id>http://www.st0p.org/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -13,7 +13,7 @@
   <generator uri="http://www.st0p.org">St0p</generator>
   
   <entry>
-    <title type="html"><![CDATA[CentOs7 安装KDE桌面 VNC CHROME]]></title>
+    <title type="html"><![CDATA[CentOs7 安装KDE桌面 VNC SERVER CHROME]]></title>
     <link href="http://www.st0p.org/15420161055935.html"/>
     <updated>2018-11-12T17:48:25+08:00</updated>
     <id>http://www.st0p.org/15420161055935.html</id>
@@ -25,13 +25,22 @@ yum install ibus-table-chinese.noarch kde-l10n-Chinese.noarch
 yum install ibus-libpinyin
 </code></pre>
 
-<h2 id="toc_1">安装VNC</h2>
+<h3 id="toc_1">设置启动进入KDE</h3>
+
+<pre><code># 查询默认终端命令 multi-user.target 相当于以前的 level 3，也就是命令行终端；而 graphical.target 相当于以前的 level 5，也就是图形界面
+systemctl get-defaul
+
+# 设置默认启动图型界面
+systemctl set-default graphical.target
+</code></pre>
+
+<h2 id="toc_2">安装VNC</h2>
 
 <pre><code>yum install tigervnc
 yum install tigervnc-server
 </code></pre>
 
-<h3 id="toc_2">配置VNC SERVER</h3>
+<h3 id="toc_3">配置VNC SERVER</h3>
 
 <pre><code># 配置窗口一
 tee /usr/lib/systemd/system/vncserver@:1.service &lt;&lt;-&#39;EOF&#39;
@@ -53,7 +62,7 @@ EOF
 systemctl daemon-reload
 </code></pre>
 
-<h3 id="toc_3">启用配置文件</h3>
+<h3 id="toc_4">启用配置文件</h3>
 
 <pre><code># 设置密码
 vncpasswd
@@ -68,18 +77,30 @@ systemctl status vncserver@:1.service
 systemctl enable vncserver@:1.service
 </code></pre>
 
-<h4 id="toc_4">如Type=forking报错 上面配置文件改为Type=simple</h4>
+<h4 id="toc_5">如Type=forking报错 上面配置文件改为Type=simple</h4>
 
 <pre><code>[Service]
 Type=simple
 </code></pre>
 
-<h4 id="toc_5">vnc viewer客户端连接黑屏</h4>
+<h4 id="toc_6">vnc viewer客户端连接黑屏</h4>
 
 <pre><code>chmod 777 /root/.vnc/xstartup
 </code></pre>
 
-<h2 id="toc_6">安装CHROME</h2>
+<h4 id="toc_7">加入防火墙</h4>
+
+<pre><code># 开启防火墙
+systemctl start firewalld
+# 自启动防火墙
+systemctl enable firewalld
+# 添加窗口一用的5901端口
+firewall-cmd --add-port=5901/tcp --permanent
+# 重载防火墙
+sudo firewall-cmd --reload
+</code></pre>
+
+<h2 id="toc_8">安装CHROME</h2>
 
 <p>CentOS/RedHat 7以上安装google-chrome可以完全参考<a href="https://intoli.com/blog/installing-google-chrome-on-centos/">https://intoli.com/blog/installing-google-chrome-on-centos/</a></p>
 
@@ -89,14 +110,14 @@ curl https://intoli.com/install-google-chrome.sh | bash
 
 <p>安装完成会显示 Successfully installed Google Chrome!</p>
 
-<h3 id="toc_7">检查是否还缺乏依赖</h3>
+<h3 id="toc_9">检查是否还缺乏依赖</h3>
 
 <pre><code>ldd /opt/google/chrome/chrome | grep &quot;not found&quot;
 </code></pre>
 
 <p>返回为空，说明CentOS下chrome依赖问题基本解决。</p>
 
-<h3 id="toc_8">不允许ROOT权限启动</h3>
+<h3 id="toc_10">不允许ROOT权限启动</h3>
 
 <p>修改/usr/bin/google-chrome文件 最下面</p>
 
