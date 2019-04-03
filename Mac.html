@@ -111,6 +111,45 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="15542696705653.html">
+                
+                  <h1>MAC OSX VPN自动添加静态路由</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<pre><code>sudo tee /etc/ppp/ip-up &lt;&lt;-&#39;EOF&#39;
+#!/bin/sh
+/sbin/route add 10.10.100.0/24 -iface ppp0
+EOF
+
+sudo chmod 755 /etc/ppp/ip-up
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2019/4/3 13:34 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Mac.html'>Mac</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="15317090928564.html">
                 
                   <h1>OSX 10.11重置Launchpad icon</h1>
@@ -462,46 +501,6 @@ go get -v -u github.com/derekparker/delve/cmd/dlv
                 </div>
               </div><!-- article -->
         
-			<div class="article">
-                <a class="clearlink" href="15258762622328.html">
-                
-                  <h1>MAC 软件提示已损坏，需要移到废纸篓的解决方法</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>移除这个应用的安全隔离属性，操作如下：<br/>
-打开终端<code>Terminal</code>，输入以下命令后回车，如需要，请输入密码</p>
-
-<pre><code class="language-shell">xattr -r -d com.apple.quarantine &lt;path&gt;
-</code></pre>
-
-<p><code>&lt;path&gt;</code>是你下载的应用程序的路径，一般在<code>/Applications/应用程序名字</code><br/>
-新运行下载的应用程序。</p>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2018/5/9 22:31 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Mac.html'>Mac</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
               
 
 
@@ -513,7 +512,7 @@ go get -v -u github.com/derekparker/delve/cmd/dlv
 			  </div>
 			  <div class="large-6 columns">
 			<p class="text-right" style="padding-top:25px;">
-			
+			 <a href="Mac_1.html">&raquo; Next Page</a> 
 			</p>
 			  </div>
 			</div>
@@ -583,6 +582,12 @@ go get -v -u github.com/derekparker/delve/cmd/dlv
 	      
 		      
 			      <li class="post">
+			        <a href="15542696705653.html">MAC OSX VPN自动添加静态路由</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="15420161055935.html">CentOs7 安装KDE桌面 VNC SERVER CHROME</a>
 			      </li>
 		     
@@ -606,10 +611,6 @@ go get -v -u github.com/derekparker/delve/cmd/dlv
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="15316208486803.html">MAC下BREW安装NGINX+PHP+MYSQL环境</a>
-			      </li>
-		     
 		  
 		      
 		  

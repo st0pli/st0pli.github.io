@@ -4,13 +4,30 @@
   <title><![CDATA[St0p's Blog]]></title>
   <link href="http://www.st0p.org/atom.xml" rel="self"/>
   <link href="http://www.st0p.org/"/>
-  <updated>2018-11-12T20:23:15+08:00</updated>
+  <updated>2019-04-03T13:39:14+08:00</updated>
   <id>http://www.st0p.org/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.st0p.org">St0p</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[MAC OSX VPN自动添加静态路由]]></title>
+    <link href="http://www.st0p.org/15542696705653.html"/>
+    <updated>2019-04-03T13:34:30+08:00</updated>
+    <id>http://www.st0p.org/15542696705653.html</id>
+    <content type="html"><![CDATA[
+<pre><code>sudo tee /etc/ppp/ip-up &lt;&lt;-&#39;EOF&#39;
+#!/bin/sh
+/sbin/route add 10.10.100.0/24 -iface ppp0
+EOF
+
+sudo chmod 755 /etc/ppp/ip-up
+</code></pre>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CentOs7 安装KDE桌面 VNC SERVER CHROME]]></title>
@@ -486,6 +503,10 @@ go get -u github.com/henrylee2cn/surfer
 go get github.com/yanyiwu/gojieba
 go get -u github.com/huichen/sego
 go get -u github.com/gorilla/mux
+go get -u github.com/urfave/cli
+go get -u gopkg.in/cheggaaa/pb.v2
+go get -u github.com/smallnest/goreq
+go get -u github.com/EDDYCJY/fake-useragent
 </code></pre>
 
 ]]></content>

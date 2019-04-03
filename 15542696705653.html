@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Centos 7 安装Docker - St0p's Blog
+  MAC OSX VPN自动添加静态路由 - St0p's Blog
   
   </title>
   
@@ -111,16 +111,14 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>Centos 7 安装Docker</h1>
+          <h1>MAC OSX VPN自动添加静态路由</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/5/16 21:9 下午</span>
+          <span class="date">2019/4/3 13:34 下午</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='Docker.html'>Docker</a></span>
-          
-              <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
+              <span class="posted-in"><a href='Mac.html'>Mac</a></span>
            
          
           <span class="comments">
@@ -133,18 +131,12 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <pre><code class="language-shell"># 初使化安装环境
-yum -y install yum-utils gcc g++ kernel-devel
+      <pre><code>sudo tee /etc/ppp/ip-up &lt;&lt;-&#39;EOF&#39;
+#!/bin/sh
+/sbin/route add 10.10.100.0/24 -iface ppp0
+EOF
 
-# 添加yum 仓库并更新
-sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo yum makecache fast
-
-
-# 安装并以服务方式启动docker
-sudo yum -y install docker-ce
-sudo systemctl enable docker
-sudo systemctl start docker
+sudo chmod 755 /etc/ppp/ip-up
 </code></pre>
 
 
@@ -156,16 +148,13 @@ sudo systemctl start docker
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="15301684740354.html" 
-          title="Previous Post: VsCode 环境配置">&laquo; VsCode 环境配置</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="15264756876811.html" 
-          title="Next Post: Docker Swarm常用命令集合">Docker Swarm常用命令集合 &raquo;</a>
+          <a  href="15420161055935.html" 
+          title="Next Post: CentOs7 安装KDE桌面 VNC SERVER CHROME">CentOs7 安装KDE桌面 VNC SERVER CHROME &raquo;</a>
       
       </p>
         </div>
