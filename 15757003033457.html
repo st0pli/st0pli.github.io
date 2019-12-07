@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Mac - St0p's Blog
+  Vim 十六进制模式修改文件 - St0p's Blog
   
   </title>
   
@@ -105,73 +105,89 @@
        
 
  <script type="text/javascript">
-	$(function(){
-		$('#menu_item_index').addClass('is_active');
-	});
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
 </script>
 <div class="row">
-	<div class="large-8 medium-8 columns">
-		<div class="markdown-body home-categories">
-		
-			<div class="article">
-                <a class="clearlink" href="15258762622328.html">
-                
-                  <h1>MAC 软件提示已损坏，需要移到废纸篓的解决方法</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>移除这个应用的安全隔离属性，操作如下：<br/>
-打开终端<code>Terminal</code>，输入以下命令后回车，如需要，请输入密码</p>
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>Vim 十六进制模式修改文件</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2019/12/7 14:31 下午</span>
 
-<pre><code class="language-shell">xattr -r -d com.apple.quarantine &lt;path&gt;
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='Linux.html'>Linux</a></span>
+           
+         
+          <span class="comments">
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <h2 id="toc_0">打开文件</h2>
+
+<pre><code class="language-text">vim -b 文件名称
 </code></pre>
 
-<p><code>&lt;path&gt;</code>是你下载的应用程序的路径，一般在<code>/Applications/应用程序名字</code><br/>
-新运行下载的应用程序。</p>
+<h2 id="toc_1">切换至十六进制显示模式 输入命令</h2>
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2018/5/9 22:31 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Mac.html'>Mac</a></span>
-          				   
-                    
+<pre><code class="language-text">%!xxd -g 1
+</code></pre>
 
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
+<h2 id="toc_2">切换至二进制显示模式 输入命令</h2>
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-              
+<pre><code class="language-text">%!xxd -r
+</code></pre>
+
+<h2 id="toc_3">退出保存 输入命令</h2>
+
+<pre><code class="language-text">wq!
+</code></pre>
 
 
-			<div class="row">
-			  <div class="large-6 columns">
-			  <p class="text-left" style="padding-top:25px;">
-			   <a href="Mac.html">&laquo; Prev Page</a>  
-			  </p>
-			  </div>
-			  <div class="large-6 columns">
-			<p class="text-right" style="padding-top:25px;">
-			
-			</p>
-			  </div>
-			</div>
-		</div>
-	</div><!-- large 8 -->
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="15542696705653.html" 
+          title="Next Post: MAC OSX VPN自动添加静态路由">MAC OSX VPN自动添加静态路由 &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

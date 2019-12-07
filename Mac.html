@@ -48,7 +48,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -68,10 +68,11 @@
 
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
-       
-       <li><a href="index.html">HOME</a></li>
-    <li><a href="archives.html">Archives</a></li>
-    <li><a href="about.html">ABOUT</a></li>
+        
+        <li><a target="self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
 
     <li><label>Categories</label></li>
 
@@ -89,6 +90,8 @@
             <li><a href="CentOs.html">CentOs</a></li>
         
             <li><a href="Shell.html">Shell</a></li>
+        
+            <li><a href="Linux.html">Linux</a></li>
          
 
       </ul>
@@ -118,7 +121,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<pre><code>sudo tee /etc/ppp/ip-up &lt;&lt;-&#39;EOF&#39;
+                        	<pre><code class="language-text">sudo tee /etc/ppp/ip-up &lt;&lt;-&#39;EOF&#39;
 #!/bin/sh
 /sbin/route add 10.10.100.0/24 -iface ppp0
 EOF
@@ -138,6 +141,8 @@ sudo chmod 755 /etc/ppp/ip-up
           				  
           					    <span class="posted-in"><a href='Mac.html'>Mac</a></span>
           				   
+                    
+
                   </div>
                   <div class="more-right right">
                   <span class="comments">
@@ -157,7 +162,7 @@ sudo chmod 755 /etc/ppp/ip-up
                       
                       <div class="a-content-text">
                         
-                        	<pre><code>defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
+                        	<pre><code class="language-text">defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
 </code></pre>
 
                         
@@ -172,6 +177,8 @@ sudo chmod 755 /etc/ppp/ip-up
           				  
           					    <span class="posted-in"><a href='Mac.html'>Mac</a></span>
           				   
+                    
+
                   </div>
                   <div class="more-right right">
                   <span class="comments">
@@ -191,12 +198,12 @@ sudo chmod 755 /etc/ppp/ip-up
                       
                       <div class="a-content-text">
                         
-                        	<pre><code>sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;
+                        	<pre><code class="language-text">sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;
 </code></pre>
 
 <h2 id="toc_0">自动提示命令</h2>
 
-<pre><code>git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+<pre><code class="language-text">git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 
 # 开启插件
 nano ~/.zshrc
@@ -209,7 +216,7 @@ plugins=(
 
 <h2 id="toc_1">语法高亮</h2>
 
-<pre><code>brew install zsh-syntax-highlighting
+<pre><code class="language-text">brew install zsh-syntax-highlighting
 
 echo &quot;source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh&quot; &gt;&gt; ~/.zshrc
 
@@ -228,6 +235,8 @@ source ~/.zshrc
           				  
           					    <span class="posted-in"><a href='Mac.html'>Mac</a></span>
           				   
+                    
+
                   </div>
                   <div class="more-right right">
                   <span class="comments">
@@ -249,19 +258,19 @@ source ~/.zshrc
                         
                         	<h2 id="toc_0">安装BREW 先安装XCODE</h2>
 
-<pre><code>/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+<pre><code class="language-text">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
 xcode-select --install
 </code></pre>
 
 <h2 id="toc_1">安装NGINX (因官方库更新不支持插件 使用<a href="https://github.com/denji/homebrew-nginx">https://github.com/denji/homebrew-nginx</a>)</h2>
 
-<pre><code>brew tap denji/nginx
+<pre><code class="language-text">brew tap denji/nginx
 brew install nginx-full --with-geoip2-module --with-headers-more-module --with-lua-module --with-redis2-module --with-subs-filter-module
 </code></pre>
 
 <h3 id="toc_2">NGINX 移动配置信息保存到目录（~/Documents/nginx） 更改80端口及运行权限</h3>
 
-<pre><code># 转移配置文件
+<pre><code class="language-text"># 转移配置文件
 mv /usr/local/etc/nginx/ ~/Documents/WebSite/nginx/
 ln -s ~/Documents/WebSite/nginx /usr/local/etc/nginx
 
@@ -323,13 +332,13 @@ sudo chmod u+s /usr/local/opt/nginx-full/bin/nginx
 
 <h3 id="toc_3">NGINX开机启动</h3>
 
-<pre><code>ln -sfv /usr/local/opt/nginx-full/*.plist ~/Library/LaunchAgents
+<pre><code class="language-text">ln -sfv /usr/local/opt/nginx-full/*.plist ~/Library/LaunchAgents
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx-full.plist
 </code></pre>
 
 <h2 id="toc_4">安装MYSQL</h2>
 
-<pre><code>brew install mysql@5.7
+<pre><code class="language-text">brew install mysql@5.7
 
 # 添加环境到/etc/profile
 export PATH=&quot;$(brew --prefix mysql@5.7)/bin:$PATH&quot;
@@ -338,7 +347,7 @@ srouce /etc/profile
 
 <h3 id="toc_5">修改配置</h3>
 
-<pre><code># 创建目录
+<pre><code class="language-text"># 创建目录
 mkdir -p ~/Documents/MySql/
 mkdir -p ~/Documents/MySql/data/
 
@@ -363,12 +372,12 @@ ln -s ~/Documents/MySql/my.cnf /usr/local/etc/my.cnf
 
 <h3 id="toc_6">初使化MYSQL</h3>
 
-<pre><code>mysqld --initialize
+<pre><code class="language-text">mysqld --initialize
 </code></pre>
 
 <h3 id="toc_7">MySQL开机启动</h3>
 
-<pre><code>ln -sfv /usr/local/opt/mysql@5.7/*.plist ~/Library/LaunchAgents
+<pre><code class="language-text">ln -sfv /usr/local/opt/mysql@5.7/*.plist ~/Library/LaunchAgents
 
 # 更改数据目录为/Users/用户名/Documents/MySql/data
 nano ~/Library/LaunchAgents/homebrew.mxcl.mysql@5.7.plist
@@ -377,13 +386,13 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql@5.7.plist
 
 <h3 id="toc_8">安装完成之后更改密码</h3>
 
-<pre><code># 查看密码
+<pre><code class="language-text"># 查看密码
 grep &quot;generated for root@localhost&quot; ~/Documents/MySql/mysql-error.log
 # 用密码登陆
 mysql -u root -p
 </code></pre>
 
-<pre><code># 修改密码
+<pre><code class="language-text"># 修改密码
 SET PASSWORD = PASSWORD(&#39;密码&#39;);
 ALTER USER &#39;root&#39;@&#39;localhost&#39; PASSWORD EXPIRE NEVER;
 flush privileges;
@@ -392,23 +401,23 @@ quit
 
 <h2 id="toc_9">更新CURL</h2>
 
-<pre><code>brew install curl
+<pre><code class="language-text">brew install curl
 brew link curl --force
 </code></pre>
 
 <h2 id="toc_10">安装PHP</h2>
 
-<pre><code>brew update
+<pre><code class="language-text">brew update
 brew install php@5.6
 </code></pre>
 
-<pre><code># 添加PHP到环境(/etc/profile)
+<pre><code class="language-text"># 添加PHP到环境(/etc/profile)
 export PATH=&quot;$(brew --prefix php56)/bin:$PATH&quot;
 export PATH=&quot;$(brew --prefix php56)/sbin:$PATH&quot;
 source /etc/profile
 </code></pre>
 
-<pre><code>mv /usr/local/etc/php/ ~/Documents/WebSite/php/
+<pre><code class="language-text">mv /usr/local/etc/php/ ~/Documents/WebSite/php/
 ln -s ~/Documents/WebSite/php /usr/local/etc/php
 
 nano ~/Documents/WebSite/php/5.6/php-fpm.conf
@@ -419,7 +428,7 @@ pid = /Users/用户名/Documents/WebSite/php/php-fpm.pid
 
 <h3 id="toc_11">PHP-FPM开机启动</h3>
 
-<pre><code>ln -sfv /usr/local/opt/php@5.6/*.plist ~/Library/LaunchAgents
+<pre><code class="language-text">ln -sfv /usr/local/opt/php@5.6/*.plist ~/Library/LaunchAgents
 # 更改数据目录为/Users/用户名/Documents/WebSite/php/5.6/
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php@5.6.plist
 </code></pre>
@@ -440,6 +449,8 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php@5.6.plist
           				  
           					    <span class="posted-in"><a href='Nginx.html'>Nginx</a></span>
           				   
+                    
+
                   </div>
                   <div class="more-right right">
                   <span class="comments">
@@ -463,7 +474,7 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php@5.6.plist
 
 <p>先安装GO插件 Ctrl+P输入ext install Go 然后安装所需插件</p>
 
-<pre><code>go get -u -v github.com/nsf/gocode
+<pre><code class="language-text">go get -u -v github.com/nsf/gocode
 go get -u -v github.com/rogpeppe/godef
 go get -u -v github.com/golang/lint/golint
 go get -u -v github.com/lukehoban/go-outline
@@ -490,6 +501,8 @@ go get -v -u github.com/derekparker/delve/cmd/dlv
           				  
           					    <span class="posted-in"><a href='Go.html'>Go</a></span>
           				   
+                    
+
                   </div>
                   <div class="more-right right">
                   <span class="comments">
@@ -566,6 +579,8 @@ go get -v -u github.com/derekparker/delve/cmd/dlv
             <a href="CentOs.html"><strong>CentOs</strong></a>
         
             <a href="Shell.html"><strong>Shell</strong></a>
+        
+            <a href="Linux.html"><strong>Linux</strong></a>
          
         </p>
 
@@ -580,6 +595,12 @@ go get -v -u github.com/derekparker/delve/cmd/dlv
                 <div class="side-content">
                 <ul class="posts-list">
 	      
+		      
+			      <li class="post">
+			        <a href="15757003033457.html">Vim 十六进制模式修改文件</a>
+			      </li>
+		     
+		  
 		      
 			      <li class="post">
 			        <a href="15542696705653.html">MAC OSX VPN自动添加静态路由</a>
@@ -605,10 +626,6 @@ go get -v -u github.com/derekparker/delve/cmd/dlv
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="15316333350253.html">安装oh-my-zsh</a>
-			      </li>
-		     
 		  
 		      
 		  
@@ -633,7 +650,9 @@ go get -v -u github.com/derekparker/delve/cmd/dlv
 
  <div class="page-bottom clearfix">
   <div class="row">
-   <p class="copyright">Copyright &copy; <a target="_blank" href="//www.st0p.org">St0p's Blog</a>.</p>
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
   </div>
 </div>
 

@@ -48,7 +48,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -68,10 +68,11 @@
 
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
-       
-       <li><a href="index.html">HOME</a></li>
-    <li><a href="archives.html">Archives</a></li>
-    <li><a href="about.html">ABOUT</a></li>
+        
+        <li><a target="self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
 
     <li><label>Categories</label></li>
 
@@ -89,6 +90,8 @@
             <li><a href="CentOs.html">CentOs</a></li>
         
             <li><a href="Shell.html">Shell</a></li>
+        
+            <li><a href="Linux.html">Linux</a></li>
          
 
       </ul>
@@ -131,7 +134,7 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <pre><code>defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
+      <pre><code class="language-text">defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
 </code></pre>
 
 
@@ -219,6 +222,8 @@
             <a href="CentOs.html"><strong>CentOs</strong></a>
         
             <a href="Shell.html"><strong>Shell</strong></a>
+        
+            <a href="Linux.html"><strong>Linux</strong></a>
          
         </p>
 
@@ -233,6 +238,12 @@
                 <div class="side-content">
                 <ul class="posts-list">
 	      
+		      
+			      <li class="post">
+			        <a href="15757003033457.html">Vim 十六进制模式修改文件</a>
+			      </li>
+		     
+		  
 		      
 			      <li class="post">
 			        <a href="15542696705653.html">MAC OSX VPN自动添加静态路由</a>
@@ -258,10 +269,6 @@
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="15316333350253.html">安装oh-my-zsh</a>
-			      </li>
-		     
 		  
 		      
 		  
@@ -286,7 +293,9 @@
 
  <div class="page-bottom clearfix">
   <div class="row">
-   <p class="copyright">Copyright &copy; <a target="_blank" href="//www.st0p.org">St0p's Blog</a>.</p>
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
   </div>
 </div>
 

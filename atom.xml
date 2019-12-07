@@ -4,13 +4,42 @@
   <title><![CDATA[St0p's Blog]]></title>
   <link href="http://www.st0p.org/atom.xml" rel="self"/>
   <link href="http://www.st0p.org/"/>
-  <updated>2019-04-03T13:39:14+08:00</updated>
+  <updated>2019-12-07T14:39:32+08:00</updated>
   <id>http://www.st0p.org/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
-  <generator uri="http://www.st0p.org">St0p</generator>
+  <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[Vim 十六进制模式修改文件]]></title>
+    <link href="http://www.st0p.org/15757003033457.html"/>
+    <updated>2019-12-07T14:31:43+08:00</updated>
+    <id>http://www.st0p.org/15757003033457.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">打开文件</h2>
+
+<pre><code class="language-text">vim -b 文件名称
+</code></pre>
+
+<h2 id="toc_1">切换至十六进制显示模式 输入命令</h2>
+
+<pre><code class="language-text">%!xxd -g 1
+</code></pre>
+
+<h2 id="toc_2">切换至二进制显示模式 输入命令</h2>
+
+<pre><code class="language-text">%!xxd -r
+</code></pre>
+
+<h2 id="toc_3">退出保存 输入命令</h2>
+
+<pre><code class="language-text">wq!
+</code></pre>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MAC OSX VPN自动添加静态路由]]></title>
@@ -18,7 +47,7 @@
     <updated>2019-04-03T13:34:30+08:00</updated>
     <id>http://www.st0p.org/15542696705653.html</id>
     <content type="html"><![CDATA[
-<pre><code>sudo tee /etc/ppp/ip-up &lt;&lt;-&#39;EOF&#39;
+<pre><code class="language-text">sudo tee /etc/ppp/ip-up &lt;&lt;-&#39;EOF&#39;
 #!/bin/sh
 /sbin/route add 10.10.100.0/24 -iface ppp0
 EOF
@@ -37,14 +66,14 @@ sudo chmod 755 /etc/ppp/ip-up
     <content type="html"><![CDATA[
 <h2 id="toc_0">安装KDE桌面</h2>
 
-<pre><code>yum groupinstall &quot;KDE Plasma Workspaces&quot;
+<pre><code class="language-text">yum groupinstall &quot;KDE Plasma Workspaces&quot;
 yum install ibus-table-chinese.noarch kde-l10n-Chinese.noarch
 yum install ibus-libpinyin
 </code></pre>
 
 <h3 id="toc_1">设置启动进入KDE</h3>
 
-<pre><code># 查询默认终端命令 multi-user.target 相当于以前的 level 3，也就是命令行终端；而 graphical.target 相当于以前的 level 5，也就是图形界面
+<pre><code class="language-text"># 查询默认终端命令 multi-user.target 相当于以前的 level 3，也就是命令行终端；而 graphical.target 相当于以前的 level 5，也就是图形界面
 systemctl get-defaul
 
 # 设置默认启动图型界面
@@ -53,13 +82,13 @@ systemctl set-default graphical.target
 
 <h2 id="toc_2">安装VNC</h2>
 
-<pre><code>yum install tigervnc
+<pre><code class="language-text">yum install tigervnc
 yum install tigervnc-server
 </code></pre>
 
 <h3 id="toc_3">配置VNC SERVER</h3>
 
-<pre><code># 配置窗口一
+<pre><code class="language-text"># 配置窗口一
 tee /usr/lib/systemd/system/vncserver@:1.service &lt;&lt;-&#39;EOF&#39;
 [Unit]
 Description=Remote desktop service (VNC)
@@ -81,7 +110,7 @@ systemctl daemon-reload
 
 <h3 id="toc_4">启用配置文件</h3>
 
-<pre><code># 设置密码
+<pre><code class="language-text"># 设置密码
 vncpasswd
 
 # 启动服务
@@ -96,18 +125,18 @@ systemctl enable vncserver@:1.service
 
 <h4 id="toc_5">如Type=forking报错 上面配置文件改为Type=simple</h4>
 
-<pre><code>[Service]
+<pre><code class="language-text">[Service]
 Type=simple
 </code></pre>
 
 <h4 id="toc_6">vnc viewer客户端连接黑屏</h4>
 
-<pre><code>chmod 777 /root/.vnc/xstartup
+<pre><code class="language-text">chmod 777 /root/.vnc/xstartup
 </code></pre>
 
 <h4 id="toc_7">加入防火墙</h4>
 
-<pre><code># 开启防火墙
+<pre><code class="language-text"># 开启防火墙
 systemctl start firewalld
 # 自启动防火墙
 systemctl enable firewalld
@@ -121,7 +150,7 @@ sudo firewall-cmd --reload
 
 <p>CentOS/RedHat 7以上安装google-chrome可以完全参考<a href="https://intoli.com/blog/installing-google-chrome-on-centos/">https://intoli.com/blog/installing-google-chrome-on-centos/</a></p>
 
-<pre><code># This installs Chrome on any RHEL/CentOS/Amazon Linux variant.
+<pre><code class="language-text"># This installs Chrome on any RHEL/CentOS/Amazon Linux variant.
 curl https://intoli.com/install-google-chrome.sh | bash
 </code></pre>
 
@@ -129,7 +158,7 @@ curl https://intoli.com/install-google-chrome.sh | bash
 
 <h3 id="toc_9">检查是否还缺乏依赖</h3>
 
-<pre><code>ldd /opt/google/chrome/chrome | grep &quot;not found&quot;
+<pre><code class="language-text">ldd /opt/google/chrome/chrome | grep &quot;not found&quot;
 </code></pre>
 
 <p>返回为空，说明CentOS下chrome依赖问题基本解决。</p>
@@ -138,11 +167,11 @@ curl https://intoli.com/install-google-chrome.sh | bash
 
 <p>修改/usr/bin/google-chrome文件 最下面</p>
 
-<pre><code># Note: exec -a below is a bashism.
+<pre><code class="language-text"># Note: exec -a below is a bashism.
 exec -a &quot;$0&quot; &quot;$HERE/chrome&quot;  &quot;$@&quot; 
 </code></pre>
 
-<pre><code># Note: exec -a below is a bashism.
+<pre><code class="language-text"># Note: exec -a below is a bashism.
 exec -a &quot;$0&quot; &quot;$HERE/chrome&quot; &quot;$@&quot; --no-sandbox --user-data-dir
 </code></pre>
 
@@ -155,7 +184,7 @@ exec -a &quot;$0&quot; &quot;$HERE/chrome&quot; &quot;$@&quot; --no-sandbox --us
     <updated>2018-08-23T21:53:23+08:00</updated>
     <id>http://www.st0p.org/15350324030193.html</id>
     <content type="html"><![CDATA[
-<pre><code>#!/bin/bash
+<pre><code class="language-text">#!/bin/bash
 filename=&quot;./input.txt&quot;
 num=0
 cat $filename | while read line
@@ -178,7 +207,7 @@ done
 
 <h2 id="toc_0">例</h2>
 
-<pre><code>----------------------------
+<pre><code class="language-text">----------------------------
 afdkjakdsjfkja
 adsfkdasjfk
 网址  http://www.a.com
@@ -206,7 +235,7 @@ http://www.test.com
     <updated>2018-07-16T10:44:52+08:00</updated>
     <id>http://www.st0p.org/15317090928564.html</id>
     <content type="html"><![CDATA[
-<pre><code>defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
+<pre><code class="language-text">defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
 </code></pre>
 
 ]]></content>
@@ -218,12 +247,12 @@ http://www.test.com
     <updated>2018-07-15T13:42:15+08:00</updated>
     <id>http://www.st0p.org/15316333350253.html</id>
     <content type="html"><![CDATA[
-<pre><code>sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;
+<pre><code class="language-text">sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;
 </code></pre>
 
 <h2 id="toc_0">自动提示命令</h2>
 
-<pre><code>git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+<pre><code class="language-text">git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 
 # 开启插件
 nano ~/.zshrc
@@ -236,7 +265,7 @@ plugins=(
 
 <h2 id="toc_1">语法高亮</h2>
 
-<pre><code>brew install zsh-syntax-highlighting
+<pre><code class="language-text">brew install zsh-syntax-highlighting
 
 echo &quot;source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh&quot; &gt;&gt; ~/.zshrc
 
@@ -254,19 +283,19 @@ source ~/.zshrc
     <content type="html"><![CDATA[
 <h2 id="toc_0">安装BREW 先安装XCODE</h2>
 
-<pre><code>/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+<pre><code class="language-text">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
 xcode-select --install
 </code></pre>
 
 <h2 id="toc_1">安装NGINX (因官方库更新不支持插件 使用<a href="https://github.com/denji/homebrew-nginx">https://github.com/denji/homebrew-nginx</a>)</h2>
 
-<pre><code>brew tap denji/nginx
+<pre><code class="language-text">brew tap denji/nginx
 brew install nginx-full --with-geoip2-module --with-headers-more-module --with-lua-module --with-redis2-module --with-subs-filter-module
 </code></pre>
 
 <h3 id="toc_2">NGINX 移动配置信息保存到目录（~/Documents/nginx） 更改80端口及运行权限</h3>
 
-<pre><code># 转移配置文件
+<pre><code class="language-text"># 转移配置文件
 mv /usr/local/etc/nginx/ ~/Documents/WebSite/nginx/
 ln -s ~/Documents/WebSite/nginx /usr/local/etc/nginx
 
@@ -328,13 +357,13 @@ sudo chmod u+s /usr/local/opt/nginx-full/bin/nginx
 
 <h3 id="toc_3">NGINX开机启动</h3>
 
-<pre><code>ln -sfv /usr/local/opt/nginx-full/*.plist ~/Library/LaunchAgents
+<pre><code class="language-text">ln -sfv /usr/local/opt/nginx-full/*.plist ~/Library/LaunchAgents
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx-full.plist
 </code></pre>
 
 <h2 id="toc_4">安装MYSQL</h2>
 
-<pre><code>brew install mysql@5.7
+<pre><code class="language-text">brew install mysql@5.7
 
 # 添加环境到/etc/profile
 export PATH=&quot;$(brew --prefix mysql@5.7)/bin:$PATH&quot;
@@ -343,7 +372,7 @@ srouce /etc/profile
 
 <h3 id="toc_5">修改配置</h3>
 
-<pre><code># 创建目录
+<pre><code class="language-text"># 创建目录
 mkdir -p ~/Documents/MySql/
 mkdir -p ~/Documents/MySql/data/
 
@@ -368,12 +397,12 @@ ln -s ~/Documents/MySql/my.cnf /usr/local/etc/my.cnf
 
 <h3 id="toc_6">初使化MYSQL</h3>
 
-<pre><code>mysqld --initialize
+<pre><code class="language-text">mysqld --initialize
 </code></pre>
 
 <h3 id="toc_7">MySQL开机启动</h3>
 
-<pre><code>ln -sfv /usr/local/opt/mysql@5.7/*.plist ~/Library/LaunchAgents
+<pre><code class="language-text">ln -sfv /usr/local/opt/mysql@5.7/*.plist ~/Library/LaunchAgents
 
 # 更改数据目录为/Users/用户名/Documents/MySql/data
 nano ~/Library/LaunchAgents/homebrew.mxcl.mysql@5.7.plist
@@ -382,13 +411,13 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql@5.7.plist
 
 <h3 id="toc_8">安装完成之后更改密码</h3>
 
-<pre><code># 查看密码
+<pre><code class="language-text"># 查看密码
 grep &quot;generated for root@localhost&quot; ~/Documents/MySql/mysql-error.log
 # 用密码登陆
 mysql -u root -p
 </code></pre>
 
-<pre><code># 修改密码
+<pre><code class="language-text"># 修改密码
 SET PASSWORD = PASSWORD(&#39;密码&#39;);
 ALTER USER &#39;root&#39;@&#39;localhost&#39; PASSWORD EXPIRE NEVER;
 flush privileges;
@@ -397,23 +426,23 @@ quit
 
 <h2 id="toc_9">更新CURL</h2>
 
-<pre><code>brew install curl
+<pre><code class="language-text">brew install curl
 brew link curl --force
 </code></pre>
 
 <h2 id="toc_10">安装PHP</h2>
 
-<pre><code>brew update
+<pre><code class="language-text">brew update
 brew install php@5.6
 </code></pre>
 
-<pre><code># 添加PHP到环境(/etc/profile)
+<pre><code class="language-text"># 添加PHP到环境(/etc/profile)
 export PATH=&quot;$(brew --prefix php56)/bin:$PATH&quot;
 export PATH=&quot;$(brew --prefix php56)/sbin:$PATH&quot;
 source /etc/profile
 </code></pre>
 
-<pre><code>mv /usr/local/etc/php/ ~/Documents/WebSite/php/
+<pre><code class="language-text">mv /usr/local/etc/php/ ~/Documents/WebSite/php/
 ln -s ~/Documents/WebSite/php /usr/local/etc/php
 
 nano ~/Documents/WebSite/php/5.6/php-fpm.conf
@@ -424,7 +453,7 @@ pid = /Users/用户名/Documents/WebSite/php/php-fpm.pid
 
 <h3 id="toc_11">PHP-FPM开机启动</h3>
 
-<pre><code>ln -sfv /usr/local/opt/php@5.6/*.plist ~/Library/LaunchAgents
+<pre><code class="language-text">ln -sfv /usr/local/opt/php@5.6/*.plist ~/Library/LaunchAgents
 # 更改数据目录为/Users/用户名/Documents/WebSite/php/5.6/
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php@5.6.plist
 </code></pre>
@@ -444,7 +473,7 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php@5.6.plist
 
 <h2 id="toc_1">配置工作环境</h2>
 
-<pre><code>mkdir -p ~/Documents/go
+<pre><code class="language-text">mkdir -p ~/Documents/go
 
 #把以下内容加入/etc/profile 中
 
@@ -462,7 +491,7 @@ srouce /etc/profile
 
 <h3 id="toc_3">官方</h3>
 
-<pre><code>go get -u golang.org/x/tools/cmd/...
+<pre><code class="language-text">go get -u golang.org/x/tools/cmd/...
 go get -u golang.org/x/tools/cmd/godoc
 go get -u github.com/golang/dep/cmd/dep
 
@@ -478,7 +507,7 @@ git clone https://github.com/golang/text.git
 
 <h3 id="toc_4">第三方</h3>
 
-<pre><code>go get -u github.com/Masterminds/glide
+<pre><code class="language-text">go get -u github.com/Masterminds/glide
 go install github.com/Masterminds/glide
 go get -u github.com/BurntSushi/toml
 go get -u gopkg.in/yaml.v2
@@ -522,7 +551,7 @@ go get -u github.com/EDDYCJY/fake-useragent
 
 <p>先安装GO插件 Ctrl+P输入ext install Go 然后安装所需插件</p>
 
-<pre><code>go get -u -v github.com/nsf/gocode
+<pre><code class="language-text">go get -u -v github.com/nsf/gocode
 go get -u -v github.com/rogpeppe/godef
 go get -u -v github.com/golang/lint/golint
 go get -u -v github.com/lukehoban/go-outline
