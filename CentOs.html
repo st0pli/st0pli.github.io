@@ -114,6 +114,78 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="16104236884962.html">
+                
+                  <h1>centos 安装xrdp远程连接桌面</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">安装epel库，否则无法安装xrdp</h2>
+
+<pre><code class="language-text">yum install epel-release
+</code></pre>
+
+<h2 id="toc_1">安装 xrdp</h2>
+
+<pre><code class="language-text">yum install xrdp
+</code></pre>
+
+<h2 id="toc_2">安装tigervnc-server</h2>
+
+<pre><code class="language-text">yum install tigervnc-server
+</code></pre>
+
+<h2 id="toc_3">配置xrdp.ini文件</h2>
+
+<pre><code class="language-text">nano /etc/xrdp/xrdp.ini
+# 把max_bpp=32 改成24
+</code></pre>
+
+<h2 id="toc_4">设置xrdp服务，开机自动启动</h2>
+
+<pre><code class="language-text">systemctl start xrdp
+systemctl enable xrdp
+</code></pre>
+
+<h2 id="toc_5">打开防火墙</h2>
+
+<pre><code class="language-text">firewall-cmd  --permanent --zone=public --add-port=3389/tcp
+firewall-cmd --reload
+</code></pre>
+
+<h2 id="toc_6">查看xrdp是否启动</h2>
+
+<pre><code class="language-text">systemctl status xrdp.service
+ss -antup|grep xrdp
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2021/1/12 11:54 上午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
+          				   
+                    
+
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="15420161055935.html">
                 
                   <h1>CentOs7 安装KDE桌面 VNC SERVER CHROME</h1>
@@ -459,6 +531,18 @@ sudo firewall-cmd --reload
 	      
 		      
 			      <li class="post">
+			        <a href="16104236884962.html">centos 安装xrdp远程连接桌面</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16081716581886.html">MAC下BREW安装PHP 5.6</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="15757003033457.html">Vim 十六进制模式修改文件</a>
 			      </li>
 		     
@@ -476,16 +560,8 @@ sudo firewall-cmd --reload
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="15350324030193.html">批量提取不规则文件中帐号密码不在同一行的数据进行合并</a>
-			      </li>
-		     
 		  
 		      
-			      <li class="post">
-			        <a href="15317090928564.html">OSX 10.11重置Launchpad icon</a>
-			      </li>
-		     
 		  
 		      
 		  

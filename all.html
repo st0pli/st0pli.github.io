@@ -114,6 +114,122 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="16104236884962.html">
+                
+                  <h1>centos 安装xrdp远程连接桌面</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">安装epel库，否则无法安装xrdp</h2>
+
+<pre><code class="language-text">yum install epel-release
+</code></pre>
+
+<h2 id="toc_1">安装 xrdp</h2>
+
+<pre><code class="language-text">yum install xrdp
+</code></pre>
+
+<h2 id="toc_2">安装tigervnc-server</h2>
+
+<pre><code class="language-text">yum install tigervnc-server
+</code></pre>
+
+<h2 id="toc_3">配置xrdp.ini文件</h2>
+
+<pre><code class="language-text">nano /etc/xrdp/xrdp.ini
+# 把max_bpp=32 改成24
+</code></pre>
+
+<h2 id="toc_4">设置xrdp服务，开机自动启动</h2>
+
+<pre><code class="language-text">systemctl start xrdp
+systemctl enable xrdp
+</code></pre>
+
+<h2 id="toc_5">打开防火墙</h2>
+
+<pre><code class="language-text">firewall-cmd  --permanent --zone=public --add-port=3389/tcp
+firewall-cmd --reload
+</code></pre>
+
+<h2 id="toc_6">查看xrdp是否启动</h2>
+
+<pre><code class="language-text">systemctl status xrdp.service
+ss -antup|grep xrdp
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2021/1/12 11:54 上午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
+          				   
+                    
+
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16081716581886.html">
+                
+                  <h1>MAC下BREW安装PHP 5.6</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">首先tap一下，然后就可以看到PHP 5.6了</h2>
+
+<pre><code class="language-text">brew tap exolnet/homebrew-deprecated
+</code></pre>
+
+<h2 id="toc_1">通过search一下可以看到 然后安装</h2>
+
+<pre><code class="language-text">brew search php
+brew install php@5.6
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2020/12/17 10:20 上午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Php.html'>Php</a></span>
+          				   
+                    
+
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="15757003033457.html">
                 
                   <h1>Vim 十六进制模式修改文件</h1>
@@ -351,117 +467,6 @@ exec -a &quot;$0&quot; &quot;$HERE/chrome&quot; &quot;$@&quot; --no-sandbox --us
                 </div>
               </div><!-- article -->
         
-			<div class="article">
-                <a class="clearlink" href="15350324030193.html">
-                
-                  <h1>批量提取不规则文件中帐号密码不在同一行的数据进行合并</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<pre><code class="language-text">#!/bin/bash
-filename=&quot;./input.txt&quot;
-num=0
-cat $filename | while read line
-do
-    if [[ `echo $line | grep &#39;帐号&#39;` != &quot;&quot; ]]; then
-        user=`echo $line | awk &#39;{print $2}&#39;`
-        num=$(expr $num + 1)
-    elif [[ `echo $line | grep &#39;密码&#39;` != &quot;&quot; ]]; then
-        pass=`echo $line | awk &#39;{print $2}&#39;`
-        num=$(expr $num + 1)
-    fi
-
-    if [[  $num == 2 ]]; then
-        echo &quot;匹配到: $user, $pass&quot;
-        echo &quot;$user,$pass&quot; &gt;&gt; ./output.txt
-        num=0
-    fi
-done
-</code></pre>
-
-<h2 id="toc_0">例</h2>
-
-<pre><code class="language-text">----------------------------
-afdkjakdsjfkja
-adsfkdasjfk
-网址  http://www.a.com
-帐号  userA
-密码  passA
-afdkjakdsjfkja
-adsfkdasjfk
-网址  http://www.b.com
-帐号  userB
-密码  passB
-----------------------------
-http://www.test.com
-网址  http://www.c.com
-帐号  userC
-密码  passC
-http://www.test.com
-</code></pre>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2018/8/23 21:53 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Shell.html'>Shell</a></span>
-          				   
-                    
-
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="15317090928564.html">
-                
-                  <h1>OSX 10.11重置Launchpad icon</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<pre><code class="language-text">defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
-</code></pre>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2018/7/16 10:44 上午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Mac.html'>Mac</a></span>
-          				   
-                    
-
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
               
 
 
@@ -545,6 +550,18 @@ http://www.test.com
 	      
 		      
 			      <li class="post">
+			        <a href="16104236884962.html">centos 安装xrdp远程连接桌面</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16081716581886.html">MAC下BREW安装PHP 5.6</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="15757003033457.html">Vim 十六进制模式修改文件</a>
 			      </li>
 		     
@@ -562,16 +579,8 @@ http://www.test.com
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="15350324030193.html">批量提取不规则文件中帐号密码不在同一行的数据进行合并</a>
-			      </li>
-		     
 		  
 		      
-			      <li class="post">
-			        <a href="15317090928564.html">OSX 10.11重置Launchpad icon</a>
-			      </li>
-		     
 		  
 		      
 		  
