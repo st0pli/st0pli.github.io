@@ -4,13 +4,62 @@
   <title><![CDATA[St0p's Blog]]></title>
   <link href="http://www.st0p.org/atom.xml" rel="self"/>
   <link href="http://www.st0p.org/"/>
-  <updated>2021-01-12T22:47:28+08:00</updated>
+  <updated>2021-02-22T13:37:16+08:00</updated>
   <id>http://www.st0p.org/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[Centos 7 安装XFCE桌面]]></title>
+    <link href="http://www.st0p.org/16139694249140.html"/>
+    <updated>2021-02-22T12:50:24+08:00</updated>
+    <id>http://www.st0p.org/16139694249140.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">安装epel库</h2>
+
+<pre><code class="language-text">sudo yum install epel-release
+sudo yum update
+</code></pre>
+
+<h2 id="toc_1">安装XFCE桌面</h2>
+
+<pre><code class="language-text">sudo yum -y groupinstall X11
+sudo yum --enablerepo=epel -y groups install &quot;Xfce&quot;
+</code></pre>
+
+<h2 id="toc_2">安装中文字体设置系统语言为中文</h2>
+
+<pre><code class="language-text"># 安装字体库
+sudo yum -y install fontconfig
+
+# 查看系统中的字体：
+fc-list
+# 如果没有中文字体则继续往下走
+
+# 安装字体
+sudo yum -y install wqy*
+sudo yum -y install cjkuni*
+sudo yum -y install google-noto-sans-simplified-chinese-fonts
+sudo yum -y install cjkuni-ukai-fonts
+
+# 然后刷新字体缓存
+fc-cache
+
+# 查看当前语言
+echo $LANG
+
+# 如果不是中文则手动设置为中文
+# 临时设置：LANG=zh_CN.UTF-8
+# 永久设置：
+nano /etc/locale.conf
+LANG=zh_CN.UTF-8
+</code></pre>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[centos 安装xrdp远程连接桌面]]></title>
@@ -30,28 +79,38 @@
 
 <h2 id="toc_2">安装tigervnc-server</h2>
 
-<pre><code class="language-text">yum install tigervnc-server
+<pre><code class="language-text">yum install tigervnc tigervnc-server
 </code></pre>
 
-<h2 id="toc_3">配置xrdp.ini文件</h2>
+<h2 id="toc_3">开启桌面远程连接服务</h2>
+
+<pre><code class="language-text"># 编辑远程桌面配置文件(用户主目录有这个文件远程连接才不会黑屏闪退)
+nano ~/.Xclients
+
+#!/bin/bash
+XFCE=&quot;$(which xfce4-session 2&gt;/dev/null)&quot;
+exec &quot;$XFCE&quot;
+</code></pre>
+
+<h2 id="toc_4">配置xrdp.ini文件</h2>
 
 <pre><code class="language-text">nano /etc/xrdp/xrdp.ini
 # 把max_bpp=32 改成24
 </code></pre>
 
-<h2 id="toc_4">设置xrdp服务，开机自动启动</h2>
+<h2 id="toc_5">设置xrdp服务，开机自动启动</h2>
 
 <pre><code class="language-text">systemctl start xrdp
 systemctl enable xrdp
 </code></pre>
 
-<h2 id="toc_5">打开防火墙</h2>
+<h2 id="toc_6">打开防火墙</h2>
 
 <pre><code class="language-text">firewall-cmd  --permanent --zone=public --add-port=3389/tcp
 firewall-cmd --reload
 </code></pre>
 
-<h2 id="toc_6">查看xrdp是否启动</h2>
+<h2 id="toc_7">查看xrdp是否启动</h2>
 
 <pre><code class="language-text">systemctl status xrdp.service
 ss -antup|grep xrdp
@@ -127,7 +186,7 @@ sudo chmod 755 /etc/ppp/ip-up
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[CentOs7 安装KDE桌面 VNC SERVER CHROME]]></title>
+    <title type="html"><![CDATA[Centos 7 安装KDE桌面 VNC SERVER CHROME]]></title>
     <link href="http://www.st0p.org/15420161055935.html"/>
     <updated>2018-11-12T17:48:25+08:00</updated>
     <id>http://www.st0p.org/15420161055935.html</id>

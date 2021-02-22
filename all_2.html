@@ -114,6 +114,110 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="15316173580282.html">
+                
+                  <h1>MAC下GO 安装环境配置</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">下载并安装GO安装包</h2>
+
+<p>打开<a href="http://golang.org">http://golang.org</a> 下载对应的二进制安装包</p>
+
+<h2 id="toc_1">配置工作环境</h2>
+
+<pre><code class="language-text">mkdir -p ~/Documents/go
+
+#把以下内容加入/etc/profile 中
+
+export GOROOT=/usr/local/go
+export GOPATH=/Users/用户名/Documents/go
+export GOBIN=$GOPATH/bin
+export PATH=&quot;$PATH:$GOROOT/bin:$GOPATH/bin&quot;
+
+#保存内容并执行以下更新环境信息
+
+srouce /etc/profile
+</code></pre>
+
+<h2 id="toc_2">安装常用工具</h2>
+
+<h3 id="toc_3">官方</h3>
+
+<pre><code class="language-text">go get -u golang.org/x/tools/cmd/...
+go get -u golang.org/x/tools/cmd/godoc
+go get -u github.com/golang/dep/cmd/dep
+
+mkdir -p $GOPATH/src/golang.org/x
+cd $GOPATH/src/golang.org/x
+git clone https://github.com/golang/tools.git
+git clone https://github.com/golang/sys.git
+git clone https://github.com/golang/crypto.git
+git clone https://github.com/golang/net.git
+git clone https://github.com/golang/text.git
+
+</code></pre>
+
+<h3 id="toc_4">第三方</h3>
+
+<pre><code class="language-text">go get -u github.com/Masterminds/glide
+go install github.com/Masterminds/glide
+go get -u github.com/BurntSushi/toml
+go get -u gopkg.in/yaml.v2
+go get -u github.com/valyala/fasthttp
+go get -u github.com/valyala/tcplisten
+go get -u github.com/buaazp/fasthttprouter
+go get -u github.com/ccpaging/nxlog4go
+go get -u github.com/go-xorm/xorm
+go get -u github.com/go-sql-driver/mysql
+go get -u github.com/golang-plus/uuid
+go get -u github.com/json-iterator/go
+go get -u github.com/olivere/elastic
+go get -u github.com/oschwald/geoip2-golang
+go get -u github.com/pkg/errors
+go get -u github.com/robfig/cron
+go get -u github.com/seefan/gossdb
+go get -u github.com/go-redis/redis
+go get -u github.com/tinylib/msgp
+go get -u github.com/PuerkitoBio/goquery
+go get -u github.com/robertkrimen/otto
+go get -u github.com/henrylee2cn/surfer
+go get github.com/yanyiwu/gojieba
+go get -u github.com/huichen/sego
+go get -u github.com/gorilla/mux
+go get -u github.com/urfave/cli
+go get -u gopkg.in/cheggaaa/pb.v2
+go get -u github.com/smallnest/goreq
+go get -u github.com/EDDYCJY/fake-useragent
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2018/7/15 9:15 上午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Go.html'>Go</a></span>
+          				   
+                    
+
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="15301684740354.html">
                 
                   <h1>VsCode 环境配置</h1>
@@ -409,6 +513,12 @@ sudo firewall-cmd --reload
 	      
 		      
 			      <li class="post">
+			        <a href="16139694249140.html">Centos 7 安装XFCE桌面</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="16104236884962.html">centos 安装xrdp远程连接桌面</a>
 			      </li>
 		     
@@ -432,10 +542,6 @@ sudo firewall-cmd --reload
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="15420161055935.html">CentOs7 安装KDE桌面 VNC SERVER CHROME</a>
-			      </li>
-		     
 		  
 		      
 		  

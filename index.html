@@ -114,6 +114,79 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="16139694249140.html">
+                
+                  <h1>Centos 7 安装XFCE桌面</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">安装epel库</h2>
+
+<pre><code class="language-text">sudo yum install epel-release
+sudo yum update
+</code></pre>
+
+<h2 id="toc_1">安装XFCE桌面</h2>
+
+<pre><code class="language-text">sudo yum -y groupinstall X11
+sudo yum --enablerepo=epel -y groups install &quot;Xfce&quot;
+</code></pre>
+
+<h2 id="toc_2">安装中文字体设置系统语言为中文</h2>
+
+<pre><code class="language-text"># 安装字体库
+sudo yum -y install fontconfig
+
+# 查看系统中的字体：
+fc-list
+# 如果没有中文字体则继续往下走
+
+# 安装字体
+sudo yum -y install wqy*
+sudo yum -y install cjkuni*
+sudo yum -y install google-noto-sans-simplified-chinese-fonts
+sudo yum -y install cjkuni-ukai-fonts
+
+# 然后刷新字体缓存
+fc-cache
+
+# 查看当前语言
+echo $LANG
+
+# 如果不是中文则手动设置为中文
+# 临时设置：LANG=zh_CN.UTF-8
+# 永久设置：
+nano /etc/locale.conf
+LANG=zh_CN.UTF-8
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2021/2/22 12:50 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
+          				   
+                    
+
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="16104236884962.html">
                 
                   <h1>centos 安装xrdp远程连接桌面</h1>
@@ -133,28 +206,38 @@
 
 <h2 id="toc_2">安装tigervnc-server</h2>
 
-<pre><code class="language-text">yum install tigervnc-server
+<pre><code class="language-text">yum install tigervnc tigervnc-server
 </code></pre>
 
-<h2 id="toc_3">配置xrdp.ini文件</h2>
+<h2 id="toc_3">开启桌面远程连接服务</h2>
+
+<pre><code class="language-text"># 编辑远程桌面配置文件(用户主目录有这个文件远程连接才不会黑屏闪退)
+nano ~/.Xclients
+
+#!/bin/bash
+XFCE=&quot;$(which xfce4-session 2&gt;/dev/null)&quot;
+exec &quot;$XFCE&quot;
+</code></pre>
+
+<h2 id="toc_4">配置xrdp.ini文件</h2>
 
 <pre><code class="language-text">nano /etc/xrdp/xrdp.ini
 # 把max_bpp=32 改成24
 </code></pre>
 
-<h2 id="toc_4">设置xrdp服务，开机自动启动</h2>
+<h2 id="toc_5">设置xrdp服务，开机自动启动</h2>
 
 <pre><code class="language-text">systemctl start xrdp
 systemctl enable xrdp
 </code></pre>
 
-<h2 id="toc_5">打开防火墙</h2>
+<h2 id="toc_6">打开防火墙</h2>
 
 <pre><code class="language-text">firewall-cmd  --permanent --zone=public --add-port=3389/tcp
 firewall-cmd --reload
 </code></pre>
 
-<h2 id="toc_6">查看xrdp是否启动</h2>
+<h2 id="toc_7">查看xrdp是否启动</h2>
 
 <pre><code class="language-text">systemctl status xrdp.service
 ss -antup|grep xrdp
@@ -323,150 +406,6 @@ sudo chmod 755 /etc/ppp/ip-up
                 </div>
               </div><!-- article -->
         
-			<div class="article">
-                <a class="clearlink" href="15420161055935.html">
-                
-                  <h1>CentOs7 安装KDE桌面 VNC SERVER CHROME</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2 id="toc_0">安装KDE桌面</h2>
-
-<pre><code class="language-text">yum groupinstall &quot;KDE Plasma Workspaces&quot;
-yum install ibus-table-chinese.noarch kde-l10n-Chinese.noarch
-yum install ibus-libpinyin
-</code></pre>
-
-<h3 id="toc_1">设置启动进入KDE</h3>
-
-<pre><code class="language-text"># 查询默认终端命令 multi-user.target 相当于以前的 level 3，也就是命令行终端；而 graphical.target 相当于以前的 level 5，也就是图形界面
-systemctl get-defaul
-
-# 设置默认启动图型界面
-systemctl set-default graphical.target
-</code></pre>
-
-<h2 id="toc_2">安装VNC</h2>
-
-<pre><code class="language-text">yum install tigervnc
-yum install tigervnc-server
-</code></pre>
-
-<h3 id="toc_3">配置VNC SERVER</h3>
-
-<pre><code class="language-text"># 配置窗口一
-tee /usr/lib/systemd/system/vncserver@:1.service &lt;&lt;-&#39;EOF&#39;
-[Unit]
-Description=Remote desktop service (VNC)
-After=syslog.target network.target
-[Service]
-Type=forking
-# Clean any existing files in /tmp/.X11-unix environment
-ExecStartPre=/bin/sh -c &#39;/usr/bin/vncserver -kill %i &gt; /dev/null 2&gt;&amp;1 || :&#39;
-ExecStart=/sbin/runuser -l root -c &quot;/usr/bin/vncserver %i&quot;
-PIDFile=/root/.vnc/%H%i.pid
-ExecStop=/bin/sh -c &#39;/usr/bin/vncserver -kill %i &gt; /dev/null 2&gt;&amp;1 || :&#39;
-[Install]
-WantedBy=multi-user.target
-EOF
-
-# 加载配置
-systemctl daemon-reload
-</code></pre>
-
-<h3 id="toc_4">启用配置文件</h3>
-
-<pre><code class="language-text"># 设置密码
-vncpasswd
-
-# 启动服务
-systemctl start vncserver@:1.service
-
-# 查看服务状态
-systemctl status vncserver@:1.service
-
-# 开机自启动
-systemctl enable vncserver@:1.service
-</code></pre>
-
-<h4 id="toc_5">如Type=forking报错 上面配置文件改为Type=simple</h4>
-
-<pre><code class="language-text">[Service]
-Type=simple
-</code></pre>
-
-<h4 id="toc_6">vnc viewer客户端连接黑屏</h4>
-
-<pre><code class="language-text">chmod 777 /root/.vnc/xstartup
-</code></pre>
-
-<h4 id="toc_7">加入防火墙</h4>
-
-<pre><code class="language-text"># 开启防火墙
-systemctl start firewalld
-# 自启动防火墙
-systemctl enable firewalld
-# 添加窗口一用的5901端口
-firewall-cmd --add-port=5901/tcp --permanent
-# 重载防火墙
-sudo firewall-cmd --reload
-</code></pre>
-
-<h2 id="toc_8">安装CHROME</h2>
-
-<p>CentOS/RedHat 7以上安装google-chrome可以完全参考<a href="https://intoli.com/blog/installing-google-chrome-on-centos/">https://intoli.com/blog/installing-google-chrome-on-centos/</a></p>
-
-<pre><code class="language-text"># This installs Chrome on any RHEL/CentOS/Amazon Linux variant.
-curl https://intoli.com/install-google-chrome.sh | bash
-</code></pre>
-
-<p>安装完成会显示 Successfully installed Google Chrome!</p>
-
-<h3 id="toc_9">检查是否还缺乏依赖</h3>
-
-<pre><code class="language-text">ldd /opt/google/chrome/chrome | grep &quot;not found&quot;
-</code></pre>
-
-<p>返回为空，说明CentOS下chrome依赖问题基本解决。</p>
-
-<h3 id="toc_10">不允许ROOT权限启动</h3>
-
-<p>修改/usr/bin/google-chrome文件 最下面</p>
-
-<pre><code class="language-text"># Note: exec -a below is a bashism.
-exec -a &quot;$0&quot; &quot;$HERE/chrome&quot;  &quot;$@&quot; 
-</code></pre>
-
-<pre><code class="language-text"># Note: exec -a below is a bashism.
-exec -a &quot;$0&quot; &quot;$HERE/chrome&quot; &quot;$@&quot; --no-sandbox --user-data-dir
-</code></pre>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2018/11/12 17:48 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='CentOs.html'>CentOs</a></span>
-          				   
-                    
-
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
               
 
 
@@ -550,6 +489,12 @@ exec -a &quot;$0&quot; &quot;$HERE/chrome&quot; &quot;$@&quot; --no-sandbox --us
 	      
 		      
 			      <li class="post">
+			        <a href="16139694249140.html">Centos 7 安装XFCE桌面</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="16104236884962.html">centos 安装xrdp远程连接桌面</a>
 			      </li>
 		     
@@ -573,10 +518,6 @@ exec -a &quot;$0&quot; &quot;$HERE/chrome&quot; &quot;$@&quot; --no-sandbox --us
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="15420161055935.html">CentOs7 安装KDE桌面 VNC SERVER CHROME</a>
-			      </li>
-		     
 		  
 		      
 		  
