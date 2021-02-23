@@ -123,7 +123,7 @@
                         
                         	<h2 id="toc_0">安装epel库</h2>
 
-<pre><code class="language-text">sudo yum install epel-release
+<pre><code class="language-text">sudo yum -y install epel-release
 sudo yum update
 </code></pre>
 
@@ -159,6 +159,11 @@ echo $LANG
 # 永久设置：
 nano /etc/locale.conf
 LANG=zh_CN.UTF-8
+
+# 安装输入法
+yum install fcitx*
+yum install im-chooser
+imsettings-switch fcitx
 </code></pre>
 
                         
@@ -201,12 +206,12 @@ LANG=zh_CN.UTF-8
 
 <h2 id="toc_1">安装 xrdp</h2>
 
-<pre><code class="language-text">yum install xrdp
+<pre><code class="language-text">yum -y install xrdp
 </code></pre>
 
 <h2 id="toc_2">安装tigervnc-server</h2>
 
-<pre><code class="language-text">yum install tigervnc tigervnc-server
+<pre><code class="language-text">yum -y  install tigervnc tigervnc-server
 </code></pre>
 
 <h2 id="toc_3">开启桌面远程连接服务</h2>
@@ -217,6 +222,8 @@ nano ~/.Xclients
 #!/bin/bash
 XFCE=&quot;$(which xfce4-session 2&gt;/dev/null)&quot;
 exec &quot;$XFCE&quot;
+
+chmod +x ~/.Xclients
 </code></pre>
 
 <h2 id="toc_4">配置xrdp.ini文件</h2>

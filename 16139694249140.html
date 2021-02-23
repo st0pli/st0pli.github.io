@@ -136,7 +136,7 @@
       <div class="article-content">
       <h2 id="toc_0">安装epel库</h2>
 
-<pre><code class="language-text">sudo yum install epel-release
+<pre><code class="language-text">sudo yum -y install epel-release
 sudo yum update
 </code></pre>
 
@@ -172,6 +172,11 @@ echo $LANG
 # 永久设置：
 nano /etc/locale.conf
 LANG=zh_CN.UTF-8
+
+# 安装输入法
+yum install fcitx*
+yum install im-chooser
+imsettings-switch fcitx
 </code></pre>
 
 
