@@ -4,7 +4,7 @@
   <title><![CDATA[St0p's Blog]]></title>
   <link href="http://www.st0p.org/atom.xml" rel="self"/>
   <link href="http://www.st0p.org/"/>
-  <updated>2021-02-23T15:17:54+08:00</updated>
+  <updated>2021-03-01T15:34:56+08:00</updated>
   <id>http://www.st0p.org/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -30,7 +30,12 @@ sudo yum update
 sudo yum --enablerepo=epel -y groups install &quot;Xfce&quot;
 </code></pre>
 
-<h2 id="toc_2">安装中文字体设置系统语言为中文</h2>
+<h2 id="toc_2">开机进入XFCE桌面</h2>
+
+<pre><code class="language-text">systemctl isolate graphical.target
+</code></pre>
+
+<h2 id="toc_3">安装中文字体设置系统语言为中文</h2>
 
 <pre><code class="language-text"># 安装字体库
 sudo yum -y install fontconfig
